@@ -1,0 +1,23 @@
+[[source]]
+
+name = "pypi"
+verify_ssl = true
+url = "https://pypi.python.org/simple"
+
+
+[packages]
+
+python-nmap = "*"
+"pypdf2" = "*"
+pygeoip = "*"
+"beautifulsoup4" = "*"
+mechanicalsoup = "*"
+
+
+[requires]
+
+python_version = "3.5"
+
+
+[dev-packages]
+
