@@ -1,5 +1,11 @@
-import socket
+# author: axi0m
+# purpose: banner grabber
+# usage: ftp_banner_grabber.py
+# changelog: 02/21/18 - initial creation
+#            02/23/18 - minor updates and rename file
+#            02/26/18 - adding vuln_banners.txt file to read in and iterate over, also changed name of script, had typo
 
+import socket
 
 def retBanner(ip, port):
     try:
@@ -12,8 +18,10 @@ def retBanner(ip, port):
         return
 
 def checkVulns(banner):
-    if 'FreeFloat FTP Server (Version 1.00)' in str(banner):
-        print('[+] Vulnerable! ')
+    f = open("vuln_banners.txt", 'r')
+    for line in f.readlines():
+        if line.strip('\n') in banner:
+            print("[+] Server is vulnerable: " + banner.strip('\n'))
 
 def main():
     portList = [21, 22, 25, 80, 110, 443]
