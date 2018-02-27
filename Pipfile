@@ -1,22 +1,13 @@
 [[source]]
 
-name = "pypi"
 verify_ssl = true
+name = "pypi"
 url = "https://pypi.python.org/simple"
 
 
 [packages]
 
-python-nmap = "*"
-"pypdf2" = "*"
-pygeoip = "*"
-"beautifulsoup4" = "*"
-mechanicalsoup = "*"
-
-
-[requires]
-
-python_version = "3.5"
+cryptography = "*"
 
 
 [dev-packages]
