@@ -1,6 +1,6 @@
 # author: axi0m
 # purpose: banner grabber
-# usage: ftp_banner_grabber.py
+# usage: ftp_banner_grabber.py <vuln banner file>
 # changelog: 02/21/18 - initial creation
 #            02/23/18 - minor updates and rename file
 #            02/26/18 - adding vuln_banners.txt file to read in and iterate over, also changed name of script, had typo
