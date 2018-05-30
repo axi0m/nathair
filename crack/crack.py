@@ -2,20 +2,25 @@
 # purpose: rudimentary password cracker
 # usage: crack.py
 # changelog: 02/26/18 - initial creation
+# 05/28/18 - migrated to hashlib module and updated to PEP8 format
 
-import crypt
+import hashlib
 
-def testPass(cryptPass):
+
+def test_pass(cryptPass):
     salt = cryptPass[0:2]
     dictFile = open('dictionary.txt', 'r')
     for word in dictFile.readlines():
         word = word.strip('\n')
-        cryptWord = crypt.crypt(word, salt)
-        if (cryptWord == cryptPass):
+        digest = hashlib.sha256()
+        digest.update(b'word')
+        digest.digest()
+        if (digest == cryptPass):
             print("[+] Found Password: " + word + "\n")
             return
     print("[-] Password Not Found.\n")
     return
+
 
 def main():
     passFile = open('passwords.txt')
@@ -24,7 +29,8 @@ def main():
             user = line.split(':')[0]
             cryptPass = line.split(':')[1].strip(" ")
             print("[*] Cracking password for: " + user)
-            testPass(cryptPass)
+            test_pass(cryptPass)
+
 
 if __name__ == "__main__":
     main()
