@@ -3,22 +3,31 @@
 # usage: crack.py
 # changelog: 02/26/18 - initial creation
 # 05/28/18 - migrated to hashlib module and updated to PEP8 format
+# https://docs.python.org/3/library/hashlib.html
+
+'''
+
+To do:
+Add checking for multiple hash types (sha256, sha512, etc)
+Add logging and be more verbose in the exception/error handling
+
+'''
 
 import hashlib
 
-
 def test_pass(cryptPass):
-    salt = cryptPass[0:2]
-    dictFile = open('dictionary.txt', 'r')
-    for word in dictFile.readlines():
-        word = word.strip('\n')
-        digest = hashlib.sha256()
-        digest.update(b'word')
-        digest.digest()
-        if (digest == cryptPass):
-            print("[+] Found Password: " + word + "\n")
-            return
-    print("[-] Password Not Found.\n")
+    # below code was in example when using crypt module which does not exist anymore
+    # salt = cryptPass[0:2]
+    with open('F:\Password_Dump.txt', 'r') as dictFile:
+        for word in dictFile:
+            word = word.strip('\n')
+            digest = hashlib.md5()
+            digest.update(b'word')
+            digest.digest()
+            if (digest == cryptPass):
+                print("[+] Found Password: " + word + "\n")
+                return
+        print("[-] Password Not Found.\n")
     return
 
 
@@ -34,3 +43,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
