@@ -10,6 +10,7 @@
 To do:
 Add checking for multiple hash types (sha256, sha512, etc)
 Add logging and be more verbose in the exception/error handling
+Using `map` may be a better way than with for handling files
 
 '''
 
@@ -21,10 +22,8 @@ def test_pass(cryptPass):
     with open('F:\Password_Dump.txt', 'r') as dictFile:
         for word in dictFile:
             word = word.strip('\n')
-            digest = hashlib.md5()
-            digest.update(b'word')
-            digest.digest()
-            if (digest == cryptPass):
+            digest = hashlib.md5(word.encode('utf-8'))
+            if (digest.hexdigest() == cryptPass):
                 print("[+] Found Password: " + word + "\n")
                 return
         print("[-] Password Not Found.\n")
@@ -43,4 +42,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

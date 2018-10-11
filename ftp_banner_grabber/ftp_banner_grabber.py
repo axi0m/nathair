@@ -41,7 +41,7 @@ def main():
             exit(0)
         else:
             print("[+] Reading Vulnerabilities From: " + filename)
-            portList = [21, 22, 25, 80, 110, 443]
+            portList = [21]
             for x in range(1, 10):
                 ip = '192.168.1.' + str(x)
                 for port in portList:
