@@ -9,6 +9,7 @@ url = "https://pypi.python.org/simple"
 
 cryptography = "*"
 maya = "*"
+click = "*"
 
 
 [dev-packages]
