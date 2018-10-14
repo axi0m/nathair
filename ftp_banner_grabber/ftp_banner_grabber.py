@@ -10,7 +10,6 @@ import socket
 import sys
 import os
 
-
 def ret_banner(ip, port):
     try:
         socket.setdefaulttimeout(2)
