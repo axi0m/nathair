@@ -31,18 +31,26 @@ def extractfile(zfile, password):
     try:
         zfile.extractall(pwd=password.encode('utf=8'))
         print("[+] Password found: {}".format(password))
-        exit(0)
+        #exit(0)
+    except RuntimeError as runerr:
+        if 'Bad password for file' in str(runerr):
+            print('[!] Incorrect password: {}'.format(password))
+        else:
+            print('[!] Runtime error encounter: {}'.format(runerr))
     except Exception as ex:
         print(ex)
         return
 
 def main(zfile, passfile):
+    counter = 0
     zFile = zipfile.ZipFile(zfile)
     with open(passfile, 'r') as dictFile:
         for word in dictFile:
+            counter += 1
         # Strip the new line character
             word = word.strip('\n')
             extractfile(zFile, word)
+    print('Total Guessed Passwords: {}'.format(counter))
 
 if __name__ == "__main__":
     main(zfile, passfile)
