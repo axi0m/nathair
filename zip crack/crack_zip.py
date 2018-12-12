@@ -4,6 +4,7 @@
 # changelog: 10/12/18 - initial creation
 # 10/25/2018 - kddiens - adding loop for the password database file
 # 11/12/2018 - kddiens - added threading, moved main logic to main function
+# 12/11/2018 - kddiens - actually added threading for real this time
 '''
 
 To do:
@@ -16,6 +17,7 @@ To do:
 
 import zipfile
 import argparse
+from threading import Thread
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--file', nargs='?', default='F:\Sample.zip', action="store", dest='file', help="The zip file to crack.")
@@ -49,7 +51,9 @@ def main(zfile, passfile):
             counter += 1
         # Strip the new line character
             word = word.strip('\n')
-            extractfile(zFile, word)
+            t = Thread(target=extractfile, args=(zFile, word))
+            t.start()
+            #extractfile(zFile, word)
     print('Total Guessed Passwords: {}'.format(counter))
 
 if __name__ == "__main__":
