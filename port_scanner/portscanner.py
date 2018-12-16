@@ -11,17 +11,21 @@ Add the following scan types
 TCP SYN, TCP XMAS, TCP FIN, TCP NULL, TCP SYN
 https://nmap.org/book/man-port-scanning-techniques.html
 
+Weird bug in recv from port 22, results are returned and are bytes but for w/e reason the CLI hangs and never completes. Blocking mode issue?
+
 '''
 
 import argparse
 import socket
 from threading import *
 from socket import *
+import sys
 
 screenLock = Semaphore(value=1)
 
 def connScan(host, port):
-    try: 
+    try:
+        setdefaulttimeout(1)
         connSocket = socket(AF_INET, SOCK_STREAM)
         connSocket.connect((host, port))
         connSocket.send('SampleData\r\n'.encode('utf-8'))
@@ -29,8 +33,11 @@ def connScan(host, port):
         screenLock.acquire()
         print("[+] {}/tcp open".format(port))
         print("[+] {}".format(results.decode('utf-8')))
-    # We need to handle a lot more errors here!
-    
+
+    except TimeoutError:
+        screenLock.acquire()
+        print("[!] Connection timeout on port {}".format(port))
+
     except:
         screenLock.acquire()
         print("[-] {}/tcp closed".format(port))
@@ -52,7 +59,7 @@ def portScan(host, port):
     except:
         print("\nScan Results for: {}".format(targetipv4))
 
-    setdefaulttimeout(5)
+    setdefaulttimeout(1)
 
     for i in port:
         #print("[!] Scanning port {}...".format(i)) # Not sure how we do this with threads?
@@ -71,7 +78,7 @@ def main():
 
     if (host == None) | (port == None):
         parser.print_help()
-        exit(0)
+        sys.exit(0)
     portScan(host, port)
 
 if __name__ == '__main__':
