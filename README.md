@@ -12,9 +12,9 @@ but I'd rather you buy TJ O'Connor's book and do the exercises/projects yourself
 However, if you decide you want to use the code, you're welcome to do so, and you're even welcome to submit PR's and issues, just do not expect a ton of support as this is just side project work I use to learn and improve my security and Python skills. 
 
 ### Prerequisites
-Python 3.x
-git
-pipenv (if you want to use the pip lock file)
+1. Python 3.x
+2. git
+3. pipenv (if you want to use the pip lock file)
 
 ### Using/Installing
 Please don't. I expect much of this not to work.
@@ -22,7 +22,9 @@ Please don't. I expect much of this not to work.
 Ensure you have the required components.
 Navigate to your preferred clone directory (/usr/src/ in Linux or wherever you want in Windows)
 git clone https://github.com/axi0m/violent_python
-cd to the relevant directory and run python <filename>.py
+cd to the relevant directory and run
+   pipenv install
+   python <filename>.py
 
 ### Testing
 No unit testing or additional tests/frameworks defined yet for this project.
@@ -34,8 +36,8 @@ No specific stylistic model used.
 I do not recommend you use this code on a live system, this was created purely to host my code as I learned more about Python
 
 ## Built With
-Pipenv - Package management and virtual environment handling
-PyCharm - IDE / Visual Studio Code
+1. Pipenv - Package management and virtual environment handling
+2. Visual Studio Code
 
 ## Contributing
 This isn't a repo maintained for necessariliy contributing and improving the content. I am sharing this just to host
@@ -53,6 +55,6 @@ axi0m
 This project is licensed under MIT license - see the [LICENSE.md] file for details.
 
 ## Acknowledgements
-Syngress for publishing the book Violent Python
-TJ O'Connor for writing the book and doing the hard work of coming up with all the examples and sharing his years of
+1. Syngress for publishing the book Violent Python
+2. TJ O'Connor for writing the book and doing the hard work of coming up with all the examples and sharing his years of
 knowledge with his readers
