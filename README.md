@@ -23,8 +23,10 @@ Ensure you have the required components.
 Navigate to your preferred clone directory (/usr/src/ in Linux or wherever you want in Windows)
 git clone https://github.com/axi0m/violent_python
 cd to the relevant directory and run
+```
    pipenv install
    python <filename>.py
+```
 
 ### Testing
 No unit testing or additional tests/frameworks defined yet for this project.
