@@ -54,7 +54,7 @@ No specific versioning system/format defined/selected.
 axi0m
 
 ## License
-This project is licensed under MIT license - see the [LICENSE.md] file for details.
+This project is licensed under MIT license - see the LICENSE.md file for details.
 
 ## Acknowledgements
 1. Syngress for publishing the book Violent Python
