@@ -6,5 +6,6 @@ url = "https://pypi.python.org/simple"
 [packages]
 cryptography = "*"
 zipfile = "*"
+requests = "*"
 
 [dev-packages]
