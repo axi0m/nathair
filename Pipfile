@@ -8,3 +8,4 @@ cryptography = "*"
 requests = "*"
 
 [dev-packages]
+flake8 = "*"
