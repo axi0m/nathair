@@ -13,6 +13,12 @@ Add the following scan types
 TCP SYN, TCP XMAS, TCP FIN, TCP NULL, TCP SYN
 https://nmap.org/book/man-port-scanning-techniques.html
 
+Add Unit Tests
+Add Logging
+Add Colorized Output via colorama
+Add pprint type functionality
+Add output via JSON
+
 Weird bug in recv from port 22, results are returned and are bytes but for w/e 
 reason the CLI hangs and never completes. Blocking mode issue?
 
