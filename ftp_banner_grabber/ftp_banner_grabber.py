@@ -9,12 +9,14 @@
 import socket
 import sys
 import os
+import logging
 
 def ret_banner(ip, port):
     try:
         socket.setdefaulttimeout(2)
         s = socket.socket()
         s.connect((ip, port))
+        logging.debug("[+] Established network connection with host {} using port {}".format(ip, port))
         banner = s.recv(1024)
         return str(banner)
     # Fix exception handling here for specific cases
