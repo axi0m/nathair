@@ -5,51 +5,64 @@
 #            02/23/18 - minor updates and rename file
 #            02/26/18 - adding vuln_banners.txt file to read in and iterate over, also changed name of script, had typo
 #            05/29/18 - adding blank lines per PEP8, renaming functions per PEP8
+#            10/17/19 - Per QL finding, adding handler for subclasses of BaseException - https://lgtm.com/rules/6780080/
+
 
 import socket
 import sys
 import os
 import logging
+import argparse
 
 def ret_banner(ip, port):
     try:
         socket.setdefaulttimeout(2)
         s = socket.socket()
         s.connect((ip, port))
-        logging.debug("[+] Established network connection with host {} using port {}".format(ip, port))
+        print(f"[+] Established network connection with host {ip} using port {port}")
         banner = s.recv(1024)
-        return str(banner)
-    # Fix exception handling here for specific cases
-    except:
-        return
+        return f"{banner}"
+
+    except SystemExit as sys_exit:
+        print(f"[!] ERROR operation failed, system exit: {sys_exit}")
+        return None
+
+    except KeyboardInterrupt as keybd_err:
+        print(f"[!] ERROR operation canceled via Keyboard Interrupt: {keybd_err}")
+        return None
+
+    except Exception as generic_err:
+        print(f"[!] ERROR unable to establish socket connection to IP address {ip} on TCP port {port}: {generic_err}")
+        return None
 
 
 def check_vulns(banner):
-    f = open("vuln_banners.txt", 'r')
-    for line in f.readlines():
-        if line.strip('\n') in banner:
-            print("[+] Server is vulnerable: " + banner.strip('\n'))
+    with open("vuln_banners.txt", "r") as vuln_file:
+        for line in vuln_file.readlines():
+            if line.strip('\n') in banner:
+                print(f"[+] Server is vulnerable! {banner}")
 
 
 def main():
     if len(sys.argv) == 2:
         filename = sys.argv[1]
         if not os.path.isfile(filename):
-            print("[-] " + filename + " does not exist!")
-            exit(0)
+            print(f"[!] ERROR {filename} does not exist!")
+            exit(1)
         if not os.access(filename, os.R_OK):
-            print("[-] " + filename + " access denied.")
-            exit(0)
+            print(f"[!] ERROR {filename} Access Denied.")
+            exit(1)
         else:
-            print("[+] Reading Vulnerabilities From: " + filename)
+            print(f"[+] Reading Vulnerabilities From: {filename}")
             portList = [21]
             for x in range(1, 10):
                 ip = '192.168.1.' + str(x)
                 for port in portList:
                     banner = ret_banner(ip, port)
                     if banner:
-                        print('[+] ' + ip + ': ' + banner.strip('\r\n'))
-                        check_vulns(banner)
+                        stripped_banner = banner.strip('\r\n')
+                        print(f"[+] {ip}:{port} {stripped_banner}")
+                        check_vulns(stripped_banner)
 
 
 if __name__ == '__main__':
