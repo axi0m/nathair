@@ -1,3 +1,5 @@
+![GitHub](https://img.shields.io/github/license/axi0m/violent_python?style=flat-square)
+
 # Violent Python
 Selection of various scripts from TJ O'Connor's Violent Python by Syngress. The scripts tend to be targeted at specific security related needs, including:
 1. Dictionary attack based zip file cracker
