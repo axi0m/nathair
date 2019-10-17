@@ -6,11 +6,11 @@
 # https://docs.python.org/3/library/hashlib.html
 # 10/10/18 - added click as import to handle arguments better than argparse
 # 10/14/18 - added try/catch for exception handling, added more comments
+# 10/17/19 - replaced default file paths, added more exception handling, cleaned up code
 '''
 
-To do:
-Add logging and be more verbose in the exception/error handling
-Using `map` may be a better way than with for handling files
+TODO: Add logging and be more verbose in the exception/error handling
+TODO: Using `map` may be a better way than with for handling files
 
 '''
 
@@ -18,9 +18,9 @@ import hashlib
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--passfile', nargs='?', default='F:\Password_Dump.txt', help="Password dump file", action="store", dest='passfile')
+parser.add_argument('--passfile', nargs='?', default='passwords_to_crack.txt', help="Password dump file", action="store", dest='passfile')
 parser.add_argument('--hashtype', nargs='?', default='md5', help="The hash algorithm to use", action="store", dest='hashtype')
-parser.add_argument('--hashfile', nargs='?', default='F:\Documents\Python\violent_python\crack\passwords.txt', action="store", dest='hashfile', help="The hashed password list to crack")
+parser.add_argument('--hashfile', nargs='?', default='hashed_passwords.txt', action="store", dest='hashfile', help="The hashed password list to crack")
 
 args = parser.parse_args()
 
@@ -30,39 +30,41 @@ hashtype = args.hashtype
 hashfile = args.hashfile
 
 def test_pass(hashtype, hashPass):
-    # We use `with` to handle file operations and close the object
+    ''' Test if we hash of the password matches our password hash file '''
     with open(passfile, 'r') as dictFile:
         for word in dictFile:
-            # Strip the new line character
             word = word.strip('\n')
-            # Wrap a try/catch to help with error handling
-            #count = count+1
             try:
-                # If we create a new instance of the class I can dynamically update the hashtype as a passed variable
-                # https://pymotw.com/2/hashlib/ <--- See that for details
+                # TODO: If we create a new instance of the class I can dynamically update the hashtype as a passed variable
+                # TODO: https://pymotw.com/2/hashlib/ <--- See that for details
                 digest = hashlib.new(hashtype)
-            except:
-                print("[!] Error encountered!\n")
-            finally:
-                # I removed the string = string.update format here as it isn't necessary using the native .update method
                 digest.update(word.encode('utf-8'))
-            #print("[*] Processed hash " + hashPass + "\n")
+
+            except KeyboardInterrupt as keybd_err:
+                print(f"[!] ERROR Keyboard interrupt handled: {keybd_err}")
+
+            except SystemExit as sys_exit:
+                print(f"[!] ERROR System exit: {sys_exit}")
+
+            except Exception as generic_err:
+                print(f"[!] ERROR Generic exception encountered: {generic_err}")
+            
             if (digest.hexdigest() == hashPass):
-                print("[+] Found Password: " + word + "\n")
-                return
-        print("[-] Password Not Found.\n")
-    return
+                return print(f"[+] DEBUG Found Password: {word}")
+            else:
+                return print(f"[-] DEBUG Password Not Found.")
 
 
 def main(hashfile, hashtype):
-    print("[*] Selected Hash Algorithm: " + hashtype + "\n")
-    hashFile = open(hashfile)
-    for line in hashFile.readlines():
-        if ":" in line:
-            user = line.split(':')[0]
-            hashPass = line.split(':')[1].strip(" ")
-            print("[*] Cracking password for: " + user)
-            test_pass(hashtype, hashPass)
+    ''' Accept file of hashes and given hash type '''
+    print(f"[*] DEBUG Selected hash algorithm: {hashtype}")
+    with open(hashfile) as hashFile:
+        for line in hashFile.readlines():
+                if ":" in line:
+                    user = line.split(':')[0]
+                    hashPass = line.split(':')[1].strip(" ")
+                    print(f"[*] DEBUG Cracking password for: {user}")
+                    test_pass(hashtype, hashPass)
 
 if __name__ == "__main__":
     main(hashfile, hashtype)
