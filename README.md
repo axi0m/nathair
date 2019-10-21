@@ -14,7 +14,7 @@ but I'd rather you buy TJ O'Connor's book and do the exercises/projects yourself
 However, if you decide you want to use the code, you're welcome to do so, and you're even welcome to submit PR's and issues, just do not expect a ton of support as this is just side project work I use to learn and improve my security and Python skills. 
 
 ### Prerequisites
-1. Python 3.x
+1. Python 3.6+
 2. git
 3. pipenv (if you want to use the pip lock file)
 
@@ -56,7 +56,7 @@ No specific versioning system/format defined/selected.
 axi0m
 
 ## License
-This project is licensed under MIT license - see the LICENSE.md file for details.
+This project is licensed under MIT license - see the [LICENSE.md](https://github.com/axi0m/violent_python/blob/master/LICENSE.md) file for details.
 
 ## Acknowledgements
 1. Syngress for publishing the book Violent Python
