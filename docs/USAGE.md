@@ -4,10 +4,16 @@
 
 Each tool is in its own folder named appropriately i.e.
 
+```
 violent_python
---> zip crack
---> port scanner
---> ftp banner grabber
+  -- zip crack
+    --- crack_zip.py
+  -- port_scanner
+    --- portscanner.py
+  -- ftp_banner_grabber
+    --- ftp_banner_grabber.py
+...
+```
 
 ## Unit Tests
 
