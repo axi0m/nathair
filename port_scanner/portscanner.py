@@ -42,7 +42,7 @@ def conn_scan(host, port):
         conn_socket.send('SampleData\r\n'.encode('utf-8'))
         results = conn_socket.recv(100)
         SCREEN_LOCK.acquire()
-        print(Fore.LIGHTYELLOW_EX + f"[+] {port}/tcp open")
+        print(Fore.GREEN + f"[+] {port}/tcp open")
         print(Fore.GREEN + f"[+] {results.decode('utf-8')}")
 
     except TimeoutError as timeout_error:
@@ -96,8 +96,8 @@ def main():
     ''' Main function call to parse arguments and run port scan'''
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', nargs='?', action="store", dest='host', help="Host to scan.")
-    parser.add_argument('--port', nargs='+', action="store", dest="port", \
-        help="Port(s) to scan, csv and space delimited")
+    parser.add_argument('--port', nargs='+', action="store", dest="port",
+                        help="Port(s) to scan, csv and space delimited")
 
     args = parser.parse_args()
 
