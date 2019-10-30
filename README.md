@@ -19,7 +19,7 @@ However, if you decide you want to use the code, you're welcome to do so, and yo
 
 ### Prerequisites
 
-1. Python 3.x
+1. Python 3.6+
 2. git
 3. pipenv (if you want to use the pip lock file)
 
@@ -82,8 +82,12 @@ No specific versioning system/format defined/selected.
 axi0m
 
 ## License
+<<<<<<< HEAD
 
 This project is licensed under MIT license - see the LICENSE.md file for details.
+=======
+This project is licensed under MIT license - see the [LICENSE.md](https://github.com/axi0m/violent_python/blob/master/LICENSE.md) file for details.
+>>>>>>> 71e2dfb7b9b367345930f4849d81102af2f180c1
 
 ## Acknowledgements
 
