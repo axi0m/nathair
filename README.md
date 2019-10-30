@@ -56,7 +56,7 @@ python -m pytest --cov
 
 ## Coding Style
 
-Black and PEP8
+[Black](https://github.com/psf/black) and [PEP8](https://www.python.org/dev/peps/pep-0008/)
 
 ## Deployment
 
