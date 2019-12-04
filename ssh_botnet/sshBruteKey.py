@@ -6,7 +6,8 @@
 
 
 '''
-To Do:
+TODO: pxssh vs Fabric vs pexpect vs subprocess
+TODO: Migrate to Object Oriented
 '''
 
 import pexpect
@@ -50,9 +51,9 @@ def connect(host, user, keyfile, release):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--host',nargs='?', action="store", dest="host", help="The host to target for scanning.")
-    parser.add_argument('--user',nargs='?', action="store", dest="user", help="The username to brute-force.")
-    parser.add_argument('--dir',nargs='?', action="store", dest="directory", help="The ssh private key to reference.")
+    parser.add_argument('--host',nargs='?', action="store", dest="host", help="Target host")
+    parser.add_argument('--user',nargs='?', action="store", dest="user", help="Target username")
+    parser.add_argument('--dir',nargs='?', action="store", dest="directory", help="ssh private key directory")
 
     args = parser.parse_args()
 
@@ -76,6 +77,7 @@ def main():
         print(f'[-] Testing keyfile {fullpath}')
         t = Thread(target=connect, args=(user, host, fullpath, True))
         child = t.start()
+    child.join()
 
 if __name__ == "__main__":
     main()
