@@ -39,27 +39,38 @@ def check_vulns(banner):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--file',nargs='?',action='store',dest='vulnfile',help="Filename with vulnerable banners to match against")
-    
+    parser.add_argument('--range',nargs='?',actions='store',dest='iprange',help="IPv4 address range to scan in CIDR form: e.g. 192.168.1.0/24")
+
     args = parser.parse_args()
 
     vulnerable_banner_file = args.vulnfile
+    target_ipv4_range = args.iprange
+
+    # TODO: Add validation of IPv4 range provided
     
+    # Ensure we have target IPv4 range
+    if not target_ipv4_range:
+        print(f'[!] ERROR - You must provide an IPv4 range in CIDR notation!')
+        parser.print_help()
+        exit(1)
+
     # Ensure we were provided a file as parameter
     if not vulnerable_banner_file:
-        print(f'[!] ERROR vulnerable banner file not provided')
+        print(f'[!] ERROR - Vulnerable banner file not provided')
         parser.print_help()
+        exit(1)
 
     # Ensure file exists
     if not os.path.isfile(vulnerable_banner_file):
-        print(f"[!] ERROR {vulnerable_banner_file} does not exist!")
+        print(f"[!] ERROR - {vulnerable_banner_file} does not exist!")
         exit(1)
     
     # Ensure we can read the file
     if not os.access(vulnerable_banner_file, os.R_OK):
-        print(f"[!] ERROR {vulnerable_banner_file} Access Denied.")
+        print(f"[!] ERROR - {vulnerable_banner_file} Access Denied.")
         exit(1)
 
-    print(f"[+] Reading vulnerabilities from: {vulnerable_banner_file}")
+    print(f"[+] INFO - Reading vulnerabilities from: {vulnerable_banner_file}")
     portList = [21]
     for x in range(1, 10):
         ip = '192.168.1.' + str(x)
