@@ -3,9 +3,9 @@
 # usage: ftp_banner_grabber.py <vuln banner file>
 
 import socket
-import sys
 import os
 import argparse
+import ipaddress
 
 def ret_banner(ip, port):
     try:
@@ -39,14 +39,19 @@ def check_vulns(banner):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--file',nargs='?',action='store',dest='vulnfile',help="Filename with vulnerable banners to match against")
-    parser.add_argument('--range',nargs='?',actions='store',dest='iprange',help="IPv4 address range to scan in CIDR form: e.g. 192.168.1.0/24")
+    parser.add_argument('--range',nargs='?',action='store',dest='iprange',help="IPv4 address range to scan in CIDR form: i.e. 192.168.1.0/24")
+    parser.add_argument('--ports',nargs='+',action='store',dest='ports',help="Space separated list of ports to check")
 
     args = parser.parse_args()
 
     vulnerable_banner_file = args.vulnfile
     target_ipv4_range = args.iprange
 
-    # TODO: Add validation of IPv4 range provided
+    # Use IPAddress module to parse CIDR range and validate it
+    network_hosts = ipaddress.ip_network(target_ipv4_range)
+
+    # Use temporary variable for parsed ports parameter
+    target_ports = args.ports
     
     # Ensure we have target IPv4 range
     if not target_ipv4_range:
@@ -57,6 +62,11 @@ def main():
     # Ensure we were provided a file as parameter
     if not vulnerable_banner_file:
         print(f'[!] ERROR - Vulnerable banner file not provided')
+        parser.print_help()
+        exit(1)
+
+    # Ensure we were provided port(s) to check
+    if not target_ports:
         parser.print_help()
         exit(1)
 
@@ -71,11 +81,15 @@ def main():
         exit(1)
 
     print(f"[+] INFO - Reading vulnerabilities from: {vulnerable_banner_file}")
-    portList = [21]
-    for x in range(1, 10):
-        ip = '192.168.1.' + str(x)
-        for port in portList:
-            banner = ret_banner(ip, port)
+    
+    # .hosts() method creates a generator for all our hosts in the network
+    for ip in network_hosts.hosts():
+        for port in target_ports:
+            # Must convert ip to String for ret_banner function instead of IPv4Address type
+            string_ip = str(ip)
+            # Must convert port from str to integer for ret_banner function
+            int_port = int(port)
+            banner = ret_banner(string_ip, int_port)
             if banner:
                 stripped_banner = banner.strip('\r\n')
                 print(f"[+] {ip}:{port} {stripped_banner}")
