@@ -1,6 +1,6 @@
 ![GitHub](https://img.shields.io/github/license/axi0m/violent_python?color=bright-green&style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/axi0m/violent_python?style=flat-square)
-![Maintenance](https://img.shields.io/maintenance/yes/2019?style=flat-square)
+![Maintenance](https://img.shields.io/maintenance/yes/2020?style=flat-square)
 ![LGTM Alerts](https://img.shields.io/lgtm/alerts/github/axi0m/violent_python?style=flat-square)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/axi0m/violent_python.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/axi0m/violent_python/context:python)
 
