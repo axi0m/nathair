@@ -4,6 +4,8 @@
 ![LGTM Alerts](https://img.shields.io/lgtm/alerts/github/axi0m/violent_python?style=flat-square)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/axi0m/violent_python.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/axi0m/violent_python/context:python)
 ![Code Style Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)
+[![Updates](https://pyup.io/repos/github/axi0m/violent_python/shield.svg)](https://pyup.io/repos/github/axi0m/violent_python/)
+[![Python 3](https://pyup.io/repos/github/axi0m/violent_python/python-3-shield.svg)](https://pyup.io/repos/github/axi0m/violent_python/)
 
 # Violent Python
 
