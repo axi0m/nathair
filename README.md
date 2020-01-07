@@ -14,7 +14,7 @@ Selection of various scripts from TJ O'Connor's Violent Python by Syngress. The 
 1. Dictionary attack based zip file cracker
 2. Rudimentary vulnerability scanner
 3. Offline Linux password cracker (dictionary based)
-etc..
+4. SSH Botnet
 
 ## Getting Started
 
@@ -34,10 +34,10 @@ However, if you decide you want to use the code, you're welcome to do so, and yo
 Please don't. I expect much of this not to work.
 
 Ensure you have the required components.
-Navigate to your preferred clone directory (/usr/src/ in Linux or wherever you want in Windows)
+Navigate to your preferred clone directory (/usr/local/src/ or /opt/ in Linux or wherever you want in Windows)
 
 ```bash
-git clone https://github.com/axi0m/violent_python
+git clone https://github.com/axi0m/violent_python.git
 ```
 
 ```bash
@@ -69,8 +69,8 @@ I do not recommend you use this code on a live system, this was created purely t
 
 ## Built With
 
-- Pipenv - Package management and virtual environment handling
-- Visual Studio Code
+- [Pipenv](https://pipenv.readthedocs.io/en/latest/) - Package management and virtual environment handling
+- [VSCode](https://code.visualstudio.com/) - IDE from Microsoft
 
 ## Contributing
 
