@@ -10,6 +10,7 @@ TODO: Add examples, debug and version parameters
 
 import hashlib
 import argparse
+import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -43,13 +44,10 @@ parser.add_argument(
     help="Print the current version of the program",
 )
 parser.add_argument(
-    "--examples",
-    nargs="?",
-    action="store_true",
-    help="Print examples of running the program",
+    "--examples", action="store_true", help="Print examples of running the program",
 )
 parser.add_argument(
-    "--debug", nargs="?", action="store_true", help="Print debug level logs to console"
+    "--debug", action="store_true", help="Toggle debug level logging to console"
 )
 
 args = parser.parse_args()
@@ -90,6 +88,12 @@ def test_pass(hashtype, hashPass):
 
 def main(hashfile, hashtype):
     """ Accept file of hashes and given hash type """
+
+    if examples:
+        print(f"Run crack.py against md5 Linux /etc/passwd file format\n")
+        print(f"crack.py --hashtype md5 --hashfile passwd --passfile dictionary.txt")
+        sys.exit(1)
+
     if debug_mode:
         print(f"[*] DEBUG - Selected hash algorithm: {hashtype}")
 
