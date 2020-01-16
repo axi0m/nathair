@@ -9,5 +9,5 @@ pexpect==4.7.0
 ptyprocess==0.6.0
 pycparser==2.19
 requests==2.22.0
-six==1.13.0
+six==1.14.0
 urllib3==1.25.7
