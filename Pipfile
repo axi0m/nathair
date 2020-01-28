@@ -12,3 +12,4 @@ colorama = "*"
 [dev-packages]
 flake8 = "*"
 pytest = "*"
+dlint = "*"
