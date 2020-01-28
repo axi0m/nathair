@@ -28,4 +28,8 @@ jobs:
       run: |
         pip install dlint
         # Stop build if there are DLint warnings/errors
-        flake8 --select=DUO . 
+        flake8 --select=DUO --exit-zero . 
+    - name: Format with Black
+      run: |
+        pip install black
+        black .
