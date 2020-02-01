@@ -55,7 +55,7 @@ def main():
         "--host", nargs="?", action="store", dest="host", help="Target host"
     )
     parser.add_argument(
-        "--user", nargs="?", action="store", dest="user", help="Target username"
+        "--user", nargs="?", action="store", dest="user", help="Target user"
     )
     parser.add_argument(
         "--dir",
