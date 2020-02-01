@@ -2,26 +2,15 @@
 # purpose: ssh bruteforcer/botnet script
 # usage: ssh_botnet.py
 # example: ssh_botnet.py
-# changelog: 12/15/18 - initial creation
 #
-
-"""
-To Do:
-pexpect on Windows doesn't support pexpect.spawn
-Pexpect can be used on Windows to wait for a pattern to be produced by a child process, using pexpect.popen_spawn.PopenSpawn, or a file descriptor, using pexpect.fdpexpect.fdspawn.
-pexpect.spawn and pexpect.run() are not available on Windows, as they rely on Unix pseudoterminals (ptys). Cross platform code must not use these.
-
-Thus at this time I'd say this script is *Nix specific
-
-"""
 
 import pexpect
 
-## Globals ##
+# Globals
 
-PROMPT = ["# ", ">>>", "> ", "\$ "]
+PROMPT = ["# ", ">>>", "> ", "\\$ "]
 
-## Functions ##
+# Functions
 
 
 def send_cmd(child, cmd):
