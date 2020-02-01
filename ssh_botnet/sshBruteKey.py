@@ -32,7 +32,7 @@ def connect(host, user, keyfile, release):
         connStr = "ssh " + user + "@" + host + " -i" + keyfile + opt
         child = pexpect.spawn(connStr)
         ret = child.expect(
-            [pexpect.TIMEOUT, perm_denied, ssh_newkey, conn_closed, "$", "#",]
+            [pexpect.TIMEOUT, perm_denied, ssh_newkey, conn_closed, "$", "#"]
         )
         if ret == 2:
             print("[-] Adding host to ~/.ssh/known_hosts")

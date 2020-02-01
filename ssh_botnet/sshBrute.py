@@ -2,15 +2,6 @@
 # purpose: ssh bruteforcer using pxssh instead of pexpect - More modular
 # usage: sshBrute.py --host 10.10.10.10 --user root -F password.txt
 # example: sshBrute.py
-# changelog: 12/17/18 - initial creation
-# changelog: 02/12/19 - finished working prototype
-
-"""
-To Do:
-Use asyncio over threading module
-Migrate to f-string formatting
-Explore using fabric instead of pxssh
-"""
 
 from pexpect import pxssh
 import argparse
