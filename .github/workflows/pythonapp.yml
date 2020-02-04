@@ -38,6 +38,3 @@ jobs:
       run: |
         pip install black
         black .
-    
-    - name: PyCharm Python Security Scanner
-      uses: tonybaloney/pycharm-security@1.6.0
