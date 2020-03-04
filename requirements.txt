@@ -7,7 +7,7 @@ cryptography==2.8
 idna==2.9
 pexpect==4.8.0
 ptyprocess==0.6.0
-pycparser==2.19
+pycparser==2.20
 requests==2.23.0
 six==1.14.0
 urllib3==1.25.8
