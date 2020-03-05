@@ -14,8 +14,6 @@ TODO: https://nmap.org/book/man-port-scanning-techniques.html
 
 TODO: Add Unit Tests
 TODO: Add Logging
-TODO: Add Colorized Output via colorama
-TODO: Add pprint type functionality
 TODO: Add output via JSON
 
 Weird bug in recv from port 22, results are returned and are bytes but for w/e
