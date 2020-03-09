@@ -14,8 +14,6 @@ TODO: https://nmap.org/book/man-port-scanning-techniques.html
 
 TODO: Add Unit Tests
 TODO: Add Logging
-TODO: Add Colorized Output via colorama
-TODO: Add pprint type functionality
 TODO: Add output via JSON
 
 Weird bug in recv from port 22, results are returned and are bytes but for w/e
@@ -90,7 +88,7 @@ def port_scan(host, port):
     if targetipv4 is not None:
         try:
             targetname = socket.gethostbyaddr(host)
-            print(f"DNS results for: {targetname[0]}")
+            print(f"[-] DNS result: {targetname[0]}")
         except Exception as generic_err:
             print(
                 f"[!] ERROR Exception encountered during address resolution: {generic_err}"
