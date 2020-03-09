@@ -88,7 +88,7 @@ def port_scan(host, port):
     if targetipv4 is not None:
         try:
             targetname = socket.gethostbyaddr(host)
-            print(f"DNS results for: {targetname[0]}")
+            print(f"[-] DNS result: {targetname[0]}")
         except Exception as generic_err:
             print(
                 f"[!] ERROR Exception encountered during address resolution: {generic_err}"
