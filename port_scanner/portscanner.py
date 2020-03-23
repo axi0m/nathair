@@ -105,7 +105,7 @@ def port_scan(host, port):
 
 
 def main():
-    """ Main function call to parse arguments and run port scan"""
+    """ Main function to parse arguments and run port scan"""
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--host", nargs="?", action="store", dest="host", help="Host to scan."
@@ -117,11 +117,44 @@ def main():
         dest="port",
         help="Port(s) to scan, csv and space delimited",
     )
+    parser.add_argument(
+        "--verbose", 
+        action="store_true", 
+        help="Enable verbose logging"
+    )
+    parser.add_argument(
+        "--version", 
+        action="version", 
+        version="{prog} + {__version__}"
+    )
+    parser.add_argument(
+        "--examples", 
+        action="store_true", 
+        help="Display examples and exit"
+    )
 
     args = parser.parse_args()
 
     host = args.host
     port = args.port
+    examples = args.examples
+    verbose_mode = args.verbose
+    
+    if examples:
+        print(
+            '''
+    ## EXAMPLES ##
+    
+    Scan a host on TCP port 22
+        portscanner.py --host 192.168.1.1 --port 22
+
+    Scan a host on multiple TCP ports
+        portscanner.py --host 192.168.1.1 --port 9090, 443, 25
+            '''
+        )
+        exit(0)
+
+    # TODO: Add check for verbose logging
 
     if host is None:
         parser.print_help()
