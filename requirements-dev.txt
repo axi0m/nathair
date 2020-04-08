@@ -12,7 +12,7 @@ importlib-metadata==1.6.0 ; python_version < '3.8'
 mccabe==0.6.1
 more-itertools==8.2.0
 packaging==20.3
-pbr==5.4.4
+pbr==5.4.5
 pluggy==0.13.1
 py==1.8.1
 pycodestyle==2.5.0
