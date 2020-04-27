@@ -72,6 +72,7 @@ I do not recommend you use this code on a live system, this was created purely t
 
 - [Pipenv](https://pipenv.readthedocs.io/en/latest/) - Package management and virtual environment handling
 - [VSCode](https://code.visualstudio.com/) - IDE from Microsoft
+- [PyUp.io](https://pyup.io) - [ ~ Dependencies scanned by PyUp.io ~ ]
 
 ## Contributing
 
