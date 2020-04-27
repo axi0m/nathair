@@ -30,9 +30,9 @@ However, if you decide you want to use the code, you're welcome to do so, and yo
 - git
 - pipenv (if you want to use the pip lock file)
 
-### Using/Installing
+## Using/Installing
 
-Please don't. I expect much of this not to work.
+⚠ I expect much of this not to work. Use at your own peril.
 
 Ensure you have the required components.
 Navigate to your preferred clone directory (/usr/local/src/ or /opt/ in Linux or wherever you want in Windows)
@@ -44,6 +44,12 @@ git clone https://github.com/axi0m/violent_python.git
 ```bash
 pipenv install
 python <filename>.py
+```
+
+## Help with tools
+```bash
+python <filname>.py -h
+python <filename>.py --examples
 ```
 
 ## Testing
@@ -70,16 +76,15 @@ I do not recommend you use this code on a live system, this was created purely t
 
 ## Built With
 
-- [Pipenv](https://pipenv.readthedocs.io/en/latest/) - Package management and virtual environment handling
-- [VSCode](https://code.visualstudio.com/) - IDE from Microsoft
+- [Pipenv](https://pipenv.readthedocs.io/en/latest/) - 📦 Package management and virtual environment handling
+- [VSCode](https://code.visualstudio.com/) - 🔥 IDE from Microsoft
 - [PyUp.io](https://pyup.io) - [ ~ Dependencies scanned by PyUp.io ~ ]
+- [LGTM](https://lgtm.com) - 🔐 Code quality and security scanning by LGTM/Semmle
+- [Hound](https://houndci.com) - 🔐 Additional static security analyzer
 
 ## Contributing
 
-This isn't a repo maintained for necessariliy contributing and improving the content. I am sharing this just to host
-an external copy of the effort as I go through TJ's book.
-
-If you want to contribute, I recommend you fork it and do with it what you will.
+If you want to contribute, I recommend you fork it and do with it what you will. I'm not looking at this time to accept contributions, I'm just expanding the code as I learn Python and add new security tooling I find useful.
 
 ## Versioning
 
@@ -98,3 +103,4 @@ This project is licensed under MIT license - see the [LICENSE.md](https://github
 1. Syngress for publishing the book Violent Python
 2. TJ O'Connor for writing the book and doing the hard work of coming up with all the examples and sharing his years of
 knowledge with his readers.
+3. All the projects mentioned in the Built With section. Almost all the code is other people's hardwork, I just cobbled it together.
