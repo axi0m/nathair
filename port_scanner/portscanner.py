@@ -24,12 +24,28 @@ reason the CLI hangs and never completes. Blocking mode issue?
 import argparse
 import socket
 import threading
+import logging
 from colorama import Fore, init
 
 # init colorama
 init()
 
+# init threading
 SCREEN_LOCK = threading.Semaphore(value=1)
+
+# init logging
+logging.basicConfig(level='DEBUG')
+logging.DEBUG('Logging in debug mode')
+
+
+def toggle_verbose(flag):
+    ''' Toggle verbose logging on/off 
+    
+    :param flag: enable or disable logging in verbose(read DEBUG) mode
+    '''
+
+    # TODO: Find the method for logging class to change config mode
+    return True
 
 
 def conn_scan(host, port):
