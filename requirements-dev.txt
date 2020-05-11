@@ -5,7 +5,7 @@ bandit==1.6.2
 colorama==0.4.3
 dlint==0.10.3
 entrypoints==0.3
-flake8==3.7.9
+flake8==3.8.0
 gitdb==4.0.5
 gitpython==3.1.2
 importlib-metadata==1.6.0 ; python_version < '3.8'
