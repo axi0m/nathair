@@ -2,9 +2,6 @@
 # purpose: rudimentary port scanner (TCP CONNECT port scan)
 # usage: portscanner.py --host --port
 # example: portscanner.py --host 10.1.1.1 --port 21,22,23
-# changelog: 12/11/18 - initial creation
-# 12/12/2018 - added threading, fixed functions up a bit, fixed byte
-# format for socket data
 
 """
 
@@ -13,11 +10,7 @@ TODO: TCP SYN, TCP XMAS, TCP FIN, TCP NULL, TCP SYN
 TODO: https://nmap.org/book/man-port-scanning-techniques.html
 
 TODO: Add Unit Tests
-TODO: Add Logging
 TODO: Add output via JSON
-
-Weird bug in recv from port 22, results are returned and are bytes but for w/e
-reason the CLI hangs and never completes. Blocking mode issue?
 
 """
 
@@ -33,10 +26,6 @@ init()
 # init threading
 SCREEN_LOCK = threading.Semaphore(value=1)
 
-# init logging
-logging.basicConfig(level='DEBUG')
-logging.DEBUG('Logging in debug mode')
-
 
 def toggle_verbose(flag):
     ''' Toggle verbose logging on/off 
@@ -44,8 +33,13 @@ def toggle_verbose(flag):
     :param flag: enable or disable logging in verbose(read DEBUG) mode
     '''
 
-    # TODO: Find the method for logging class to change config mode
-    return True
+    if flag:
+        logging.basicConfig(level='DEBUG')
+        logging.debug('Logging in debug mode')
+
+    else:
+        logging.basicConfig(level='ERROR')
+        logging.info('Logging level in error mode (default)')
 
 
 def conn_scan(host, port):
@@ -56,20 +50,28 @@ def conn_scan(host, port):
         conn_socket.connect((host, port))
         conn_socket.send("SampleData\r\n".encode("utf-8"))
         results = conn_socket.recv(100)
+        decoded_results = results.decode('utf-8')
+
         SCREEN_LOCK.acquire()
+
         print(Fore.GREEN + f"[+] {port}/tcp open")
-        print(Fore.GREEN + f"[+] {results.decode('utf-8')}")
+        logging.info(f'[+] {port}/tcp open')
+
+        print(Fore.GREEN + f"[+] {decoded_results}")
+        logging.info(f"[+] {decoded_results}")
 
     except TimeoutError as timeout_error:
         SCREEN_LOCK.acquire()
-        print(
-            Fore.LIGHTYELLOW_EX
-            + f"[!] Connection timeout on port {port}: {timeout_error}"
-        )
+        #print(
+        #    Fore.LIGHTYELLOW_EX
+        #    + f"[!] Connection timeout on port {port}: {timeout_error}"
+        #)
+        logging.error(f'[!] Connection timeout on port {port}: {timeout_error}')
 
     except KeyboardInterrupt as keybd_err:
         SCREEN_LOCK.acquire()
-        print(Fore.LIGHTYELLOW_EX + f"[!] Keyboard interrupt: {keybd_err}")
+        #print(Fore.LIGHTYELLOW_EX + f"[!] Keyboard interrupt: {keybd_err}")
+        logging.error(f'[!] Keyboard interrupt: {keybd_err}')
 
     except Exception as generic_err:
         SCREEN_LOCK.acquire()
@@ -78,6 +80,7 @@ def conn_scan(host, port):
             + f"[-] Generic exception port most likely closed or network timeout: {generic_err}"
         )
         print(Fore.LIGHTYELLOW_EX + f"[-] {port}/tcp closed")
+        logging.info(f'[-] {port}/tcp closed')
 
     finally:
         SCREEN_LOCK.release()
@@ -88,28 +91,33 @@ def port_scan(host, port):
     """ Perform scan for given hostname and TCP port number(s)"""
     try:
         targetipv4 = socket.gethostbyname(host)
-        print(
-            Fore.LIGHTYELLOW_EX
-            + f"[-] DEBUG Host IP address resolved via DNS: {targetipv4}"
-        )
+        #print(
+        #    Fore.LIGHTYELLOW_EX
+        #    + f"[-] DEBUG Host IP address resolved via DNS: {targetipv4}"
+        #)
+        logging.debug(f'[*] Host IPv4 address resolved via DNS is {targetipv4}')
 
     except KeyboardInterrupt as keybd_err:
-        print(Fore.RED + f"[!] ERROR Keyboard interrupt handled: {keybd_err}")
+        #print(Fore.RED + f"[!] ERROR Keyboard interrupt handled: {keybd_err}")
+        logging.error(f'[!] Keyboard interrupt handled: {keybd_err}')
         return None
 
     except Exception as generic_err:
-        print(Fore.RED + f"[!] ERROR cannot resolve host {host}: {generic_err}")
+        #print(Fore.RED + f"[!] ERROR cannot resolve host {host}: {generic_err}")
+        logging.error(f'[!] Cannot resolve host {host}: {generic_err}')
         return None
 
     if targetipv4 is not None:
         try:
             targetname = socket.gethostbyaddr(host)
-            print(f"[-] DNS result: {targetname[0]}")
+            #print(f"[-] DNS result: {targetname[0]}")
+            logging.debug(f'[*] DNS result: {targetname[0]}')
         except Exception as generic_err:
-            print(
-                f"[!] ERROR Exception encountered during address resolution: {generic_err}"
-            )
-            print(f"DNS results for: {targetipv4}")
+            #print(
+                #f"[!] ERROR Exception encountered during address resolution: {generic_err}"
+            #)
+            #print(f"DNS results for: {targetipv4}")
+            logging.error(f'[!] Exception encountered during address resolution: {generic_err}')
 
         socket.setdefaulttimeout(1)
 
@@ -179,6 +187,9 @@ def main():
     if port is None:
         parser.print_help()
         exit(0)
+
+    if verbose_mode:
+        toggle_verbose(True)
 
     port_scan(host, port)
 
