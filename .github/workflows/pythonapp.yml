@@ -40,4 +40,4 @@ jobs:
         black .
         
     - name: PyCharm Python Security Scanner
-      uses: tonybaloney/pycharm-security@1.17.0
+      uses: tonybaloney/pycharm-security@1.18.0
