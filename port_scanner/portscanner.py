@@ -37,20 +37,24 @@ def toggle_verbose(flag):
         logging.basicConfig(level='DEBUG')
         logging.debug('Logging in debug mode')
 
-    else:
-        logging.basicConfig(level='ERROR')
-        logging.info('Logging level in error mode (default)')
-
 
 def conn_scan(host, port):
-    """ TCP scan and banner receiver"""
+    ''' TCP scan and banner receiver
+
+    :param host: IPv4 address of host to target
+    :param port: TCP port of host to CONNECT to
+    '''
+
+    socket.setdefaulttimeout(1)
+    conn_socket = socket.socket()
+
     try:
-        socket.setdefaulttimeout(1)
-        conn_socket = socket.socket()
-        conn_socket.connect((host, port))
-        conn_socket.send("SampleData\r\n".encode("utf-8"))
-        results = conn_socket.recv(100)
-        decoded_results = results.decode('utf-8')
+        with conn_socket as s:
+            s.connect((host, port))
+            s.send(b"SampleData\r\n")
+            results = s.recv(100)
+            #decoded_results = results.decode('utf-8')
+            decoded_results = repr(results)
 
         SCREEN_LOCK.acquire()
 
@@ -62,15 +66,10 @@ def conn_scan(host, port):
 
     except TimeoutError as timeout_error:
         SCREEN_LOCK.acquire()
-        #print(
-        #    Fore.LIGHTYELLOW_EX
-        #    + f"[!] Connection timeout on port {port}: {timeout_error}"
-        #)
         logging.error(f'[!] Connection timeout on port {port}: {timeout_error}')
 
     except KeyboardInterrupt as keybd_err:
         SCREEN_LOCK.acquire()
-        #print(Fore.LIGHTYELLOW_EX + f"[!] Keyboard interrupt: {keybd_err}")
         logging.error(f'[!] Keyboard interrupt: {keybd_err}')
 
     except Exception as generic_err:
@@ -84,39 +83,27 @@ def conn_scan(host, port):
 
     finally:
         SCREEN_LOCK.release()
-        conn_socket.close()
 
 
 def port_scan(host, port):
     """ Perform scan for given hostname and TCP port number(s)"""
     try:
         targetipv4 = socket.gethostbyname(host)
-        #print(
-        #    Fore.LIGHTYELLOW_EX
-        #    + f"[-] DEBUG Host IP address resolved via DNS: {targetipv4}"
-        #)
         logging.debug(f'[*] Host IPv4 address resolved via DNS is {targetipv4}')
 
     except KeyboardInterrupt as keybd_err:
-        #print(Fore.RED + f"[!] ERROR Keyboard interrupt handled: {keybd_err}")
         logging.error(f'[!] Keyboard interrupt handled: {keybd_err}')
         return None
 
     except Exception as generic_err:
-        #print(Fore.RED + f"[!] ERROR cannot resolve host {host}: {generic_err}")
         logging.error(f'[!] Cannot resolve host {host}: {generic_err}')
         return None
 
     if targetipv4 is not None:
         try:
             targetname = socket.gethostbyaddr(host)
-            #print(f"[-] DNS result: {targetname[0]}")
             logging.debug(f'[*] DNS result: {targetname[0]}')
         except Exception as generic_err:
-            #print(
-                #f"[!] ERROR Exception encountered during address resolution: {generic_err}"
-            #)
-            #print(f"DNS results for: {targetipv4}")
             logging.error(f'[!] Exception encountered during address resolution: {generic_err}')
 
         socket.setdefaulttimeout(1)
@@ -178,8 +165,6 @@ def main():
         )
         exit(0)
 
-    # TODO: Add check for verbose logging
-
     if host is None:
         parser.print_help()
         exit(0)
@@ -190,6 +175,10 @@ def main():
 
     if verbose_mode:
         toggle_verbose(True)
+        print(verbose_mode)
+    else:
+        logging.basicConfig(level='ERROR')
+        logging.info('Logging level in error mode (default)')
 
     port_scan(host, port)
 
