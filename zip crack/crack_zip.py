@@ -1,8 +1,7 @@
 # author: axi0m
 # purpose: rudimentary zip cracker
 
-from zipfile import ZipFile
-from zipfile import BadZipFile
+import zipfile
 import argparse
 import pyzipper
 
@@ -35,8 +34,14 @@ zfile = args.file
 pfile = args.pwdfile
 
 
+def test_zipfile(zfile):
+    ''' Test if file is legit Zip file or not '''
+    result = zipfile.is_zipfile(zfile)
+    print(f'{result}')
+
+
 def extractfile(zfile, pfile):
-    ''' Attempt to decrypt password protected archive 
+    ''' Attempt to decrypt password protected archive
     
     :param zfile: The zip file to attempt to decrypt
     :param pfile: The password to try
@@ -44,7 +49,7 @@ def extractfile(zfile, pfile):
 
     print(f'[-] Begin extraction subroutine for archive {zfile} with provided password file: {pfile}')
 
-    with ZipFile(zfile) as archive:
+    with zipfile.ZipFile(zfile) as archive:
         with open(pfile, "r") as dictFile:
             for word in dictFile:
                 word = word.strip("\n")
@@ -66,6 +71,9 @@ def extractfile(zfile, pfile):
                     print(f'[!] Encountered generic exception: {err}')
                     return err
 
+def main():
+    test_zipfile(zfile)
+    #extractfile(zfile, pfile)
 
 if __name__ == "__main__":
-    extractfile(zfile, pfile)
+    main()
