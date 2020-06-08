@@ -4,7 +4,7 @@
 from zipfile import ZipFile
 from zipfile import BadZipFile
 import argparse
-import pyzipper
+#import pyzipper
 
 parser = argparse.ArgumentParser()
 parser.add_argument(

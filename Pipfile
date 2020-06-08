@@ -8,6 +8,7 @@ cryptography = "*"
 requests = "*"
 pexpect = "*"
 colorama = "*"
+pyzipper = "*"
 
 [dev-packages]
 flake8 = "*"
