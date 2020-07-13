@@ -22,6 +22,6 @@ pytest==5.4.3
 pyyaml==5.3.1
 six==1.15.0
 smmap==3.0.4
-stevedore==3.0.0
+stevedore==3.1.0
 wcwidth==0.2.5
 zipp==3.1.0
