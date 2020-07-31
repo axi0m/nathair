@@ -13,6 +13,7 @@ TODO: Add Unit Tests
 TODO: Add output via JSON
 TODO: Support ranges in argparse --ports parameter
 TODO: Add IPv6 support, getaddrinfo instead of gethostbyname
+TODO: Add mode function - toggle between threading, multiprocessing and asyncio
 
 Very helpful
 https://gist.github.com/tonybaloney/8f36998f1bd552a61643668de47f1ba7
@@ -20,9 +21,9 @@ https://gist.github.com/tonybaloney/8f36998f1bd552a61643668de47f1ba7
 """
 
 import argparse
-import socket
-import multiprocessing as mp
 import logging
+import multiprocessing as mp
+import socket
 import time
 from colorama import Fore, init
 
