@@ -89,14 +89,21 @@ def tcp_connect_threading(host: str, port: int, results: Queue):
             #banners.put(decoded_banner)
         
 
-def tcp_connect_async(host: str, port: int, results: list):
+async def tcp_connect_async(host: str, port: int, results: list):
     """ TCP CONNECT and banner receiver (async)
 
     :param host: IPv4 address of host to target
     :param port: TCP port of host to CONNECT to
     :param results: List to store our results
     """
-    pass
+    try:
+        future = asyncio.open_connection(host=host, port=port)
+        r, w = await asyncio.wait_for(future, timeout=timeout)
+        results.append(port)
+        w.close()
+    except asyncio.TimeoutError:
+        # Port is closed
+        pass
 
 def convert_hostname(host):
     """ Wrapper for socket.gethostbyname to get IPv4 address
@@ -174,8 +181,20 @@ def host_scan_threading(targetipv4, ports):
     while not results.empty():
         print('Port {0} is open'.format(results.get()))
 
-def host_scan_async(targetipv4, ports):
-    pass
+async def host_scan_async(targetipv4, ports):
+    """ Perform scan given hostname and TCP port number(s) using async coroutines
+
+    :param targetipv4: IPv4 of host to target
+    "param ports: List of TCP ports to connect to
+    """
+
+    tasks = []
+    results = []
+    for port in ports:
+        tasks.append(tcp_connect_async(targetipv4, port, results))
+    await asyncio.gather(*tasks)
+    return results
+
 
 def main():
     """ Main function to parse arguments and run port scan"""
@@ -287,7 +306,9 @@ def main():
     # if mode is 'async' use async coroutines
     if mode == "async":
         if targetipv4 and integer_ports:
-            host_scan_async(targetipv4, integer_ports)
+            results = asyncio.run(host_scan_async(targetipv4, integer_ports))
+            for result in results:
+                print("port {0} is open".format(result))
 
 if __name__ == "__main__":
     start = time.perf_counter()
