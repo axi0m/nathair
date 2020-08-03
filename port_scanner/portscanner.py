@@ -16,7 +16,7 @@ TODO: Add IPv6 support, getaddrinfo instead of gethostbyname
 TODO: Add mode function - toggle between threading, multiprocessing and asyncio
 
 Very helpful
-https://gist.github.com/tonybaloney/8f36998f1bd552a61643668de47f1ba7
+TODO: https://gist.github.com/tonybaloney/8f36998f1bd552a61643668de47f1ba7
 
 """
 
@@ -24,6 +24,7 @@ import argparse
 import logging
 import multiprocessing as mp
 import socket
+import threading
 import time
 from colorama import Fore, init
 
@@ -213,4 +214,7 @@ def main():
 
 
 if __name__ == "__main__":
+    start = time.perf_counter()
     main()
+    stop = time.perf_counter()
+    print(f'[*] Execution time was: {start-stop:0.4f} seconds')
