@@ -30,6 +30,25 @@ However, if you decide you want to use the code, you're welcome to do so, and yo
 - git
 - pipenv (if you want to use the pip lock file)
 
+### Dependency Graph 08/03/2020
+```
+pipenv graph
+colorama==0.4.3
+cryptography==2.9.2
+  - cffi [required: >=1.8,!=1.11.3, installed: 1.14.0]
+    - pycparser [required: Any, installed: 2.20]
+  - six [required: >=1.4.1, installed: 1.15.0]
+pexpect==4.8.0
+  - ptyprocess [required: >=0.5, installed: 0.6.0]
+pyzipper==0.3.1
+  - pycryptodomex [required: Any, installed: 3.9.7]
+requests==2.23.0
+  - certifi [required: >=2017.4.17, installed: 2020.4.5.2]
+  - chardet [required: >=3.0.2,<4, installed: 3.0.4]
+  - idna [required: >=2.5,<3, installed: 2.9]
+  - urllib3 [required: >=1.21.1,<1.26,!=1.25.1,!=1.25.0, installed: 1.25.9]
+  ```
+
 ## Using/Installing
 
 ⚠ I expect much of this not to work. Use at your own peril.
