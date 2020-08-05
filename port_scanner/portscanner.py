@@ -1,22 +1,6 @@
-# author: axi0m
-# purpose: rudimentary port scanner (TCP CONNECT port scan)
-# usage: portscanner.py --host --ports
-# example: portscanner.py --host 10.1.1.1 --ports 21, 22, 23
-
 """
-
-TODO: Add the following scan types
-TODO: TCP SYN, TCP XMAS, TCP FIN, TCP NULL, TCP SYN
-TODO: https://nmap.org/book/man-port-scanning-techniques.html
-
-TODO: Add Unit Tests
-TODO: Add output via JSON
-TODO: Support ranges in argparse --ports parameter
-TODO: Add IPv6 support, getaddrinfo instead of gethostbyname
-
 Very helpful
 TODO: https://gist.github.com/tonybaloney/8f36998f1bd552a61643668de47f1ba7
-
 """
 
 import argparse
@@ -27,10 +11,10 @@ import socket
 from threading import Thread
 from queue import Queue
 import time
-from colorama import Fore, init
+# from colorama import Fore, init
 
 # init colorama
-init()
+# init()
 
 # default socket timeout
 timeout = 1
@@ -77,8 +61,6 @@ def tcp_connect_threading(host: str, port: int, results: Queue):
     conn_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     with conn_socket as s:
-        print(f"Host is {host}")
-        print(f"Port is {port}")
         result = s.connect_ex((host, port))
         s.send(b"SampleData\r\n")
         banner = s.recv(100)
@@ -105,6 +87,7 @@ async def tcp_connect_async(host: str, port: int, results: list):
         # Port is closed
         pass
 
+
 def convert_hostname(host):
     """ Wrapper for socket.gethostbyname to get IPv4 address
 
@@ -123,6 +106,7 @@ def convert_hostname(host):
     except Exception as generic_err:
         logging.error(f'[!] Cannot resolve host {host}: {generic_err}')
         return None
+
 
 def host_scan_mp(targetipv4, ports):
     """ Perform scan for given hostname and TCP port number(s)
@@ -154,6 +138,7 @@ def host_scan_mp(targetipv4, ports):
         while not outputs.empty():
             print("Port {0} is open".format(outputs.get()))
 
+
 def host_scan_threading(targetipv4, ports):
     """ Perform scan given hostname and TCP port number(s) using threads
 
@@ -180,6 +165,7 @@ def host_scan_threading(targetipv4, ports):
     # As the threads finish, the results queue object will grow in size, print the values of the queue
     while not results.empty():
         print('Port {0} is open'.format(results.get()))
+
 
 async def host_scan_async(targetipv4, ports):
     """ Perform scan given hostname and TCP port number(s) using async coroutines
