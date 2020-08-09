@@ -5,7 +5,7 @@
 [![Code Style Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 [![Updates](https://pyup.io/repos/github/axi0m/violent_python/shield.svg)](https://pyup.io/repos/github/axi0m/violent_python/)
 [![Python 3](https://pyup.io/repos/github/axi0m/violent_python/python-3-shield.svg)](https://pyup.io/repos/github/axi0m/violent_python/)
-[![Reviewed By Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
+[![Reviewed By Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg?style=flat-square)](https://houndci.com)
 [![Python application](https://github.com/axi0m/violent_python/workflows/Python%20application/badge.svg?branch=master)](https://github.com/axi0m/violent_python/actions)
 
 # Violent Python
