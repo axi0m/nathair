@@ -39,9 +39,18 @@ Furthermore if you want to see examples of usage, feel free to pass the `--examp
 
 ## Example 1: port_scanner.py
 
+`pipenv shell`
+`port_scanner.py --help`
+`port_scanner.py --examples`
+`port_scanner.py --mode async --host 10.1.1.1 --ports 22, 443`
+`port_scanner.py --mode processes --host 10.1.1.1 --ports 22, 80, 23`
+`port_scanner.py --mode threads --host www.google.com --ports 443, 80`
+
 ## Example 2: crack_zip.py
 
-
+`pipenv shell`
+`crack_zip.py --examples`
+`crack_zip.py --passfile passwords.txt --hashtype md5 --hashfile hashes.txt`
 
 ## Unit Tests
 
