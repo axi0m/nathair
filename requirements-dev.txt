@@ -40,7 +40,7 @@ more-itertools==8.5.0
 
 packaging==20.4
 
-pbr==5.4.5
+pbr==5.5.0
 
 pexpect==4.8.0
 
