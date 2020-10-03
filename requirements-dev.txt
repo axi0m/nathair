@@ -20,7 +20,7 @@ cryptography==3.1.1
 
 dlint==0.10.3
 
-flake8==3.8.3
+flake8==3.8.4
 
 gitdb==4.0.5
 
