@@ -30,7 +30,7 @@ idna==2.10
 
 importlib-metadata==2.0.0; python_version < '3.8'
 
-isort==5.5.4
+isort==5.6.2
 
 lazy-object-proxy==1.5.1
 
