@@ -22,7 +22,7 @@ pycryptodomex==3.9.8
 
 pyzipper==0.3.1
 
-requests==2.24.0
+requests==2.25.0
 
 six==1.15.0
 
