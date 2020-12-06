@@ -6,7 +6,7 @@ atomicwrites==1.4.0; sys_platform == 'win32'
 
 attrs==20.3.0
 
-bandit==1.6.2
+bandit==1.6.3
 
 certifi==2020.11.8
 
