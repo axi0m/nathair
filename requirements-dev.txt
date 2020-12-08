@@ -74,7 +74,7 @@ six==1.15.0
 
 smmap==3.0.4
 
-stevedore==3.2.2
+stevedore==3.3.0
 
 toml==0.10.2
 
