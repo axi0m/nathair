@@ -9,6 +9,8 @@ requests = "*"
 pexpect = "*"
 colorama = "*"
 pyzipper = "*"
+tqdm = "*"
+numpy = "*"
 
 [dev-packages]
 flake8 = "*"
