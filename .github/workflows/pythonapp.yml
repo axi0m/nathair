@@ -33,7 +33,7 @@ jobs:
       run: |
         pip install bandit
         # Stop the build if there are major issues reported by bandit
-        bandit -r . -x ssh_botnet.py
+        bandit -r . -x ssh_botnet.py, rc4_bruteforce.py
     - name: Format with Black
       run: |
         pip install black
