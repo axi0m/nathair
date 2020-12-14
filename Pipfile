@@ -11,6 +11,7 @@ colorama = "*"
 pyzipper = "*"
 tqdm = "*"
 numpy = "*"
+requests-html = "*"
 
 [dev-packages]
 flake8 = "*"
