@@ -1,10 +1,12 @@
 #!/usr/bin/python
 # Author: axi0m
 # Purpose: To bruteforce RC4 encrypted files
-# Usage: ./rc4_bruteforce.py --filename secret.txt
+# Usage: ./rc4_bruteforce.py secret.txt
 # Reference: https://gist.github.com/cosu/4017169
 # ChangeLog:
 # 02/12/2019 - initially created
+# 02/25/2021 - Does not work anymore, cryptography wont allow small RC4 key sizes
+# ValueError: Invalid key size (24) for RC4.
 
 """
 Turns out that ARC4 may not be compatible with Python 3.7
@@ -17,11 +19,9 @@ import sys
 import numpy
 import string
 import itertools
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms
 from cryptography.hazmat.backends import default_backend
 from multiprocessing import Pool
-from time import time
-import cProfile
 
 #ALPHABET = string.digits
 ALPHABET = string.ascii_lowercase
@@ -73,8 +73,8 @@ def worker(base):
 
     # Generate all strings of KEY_LENGTH length and check them
     # We know prior that the key starts with a. Remove the next two lines for generic behavior
-    #if string.ascii_lowercase in ALPHABET:
-        #base = tuple(['a']) + base 
+    if string.ascii_lowercase in ALPHABET:
+        base = tuple(['a']) + base 
 
     for i in itertools.product(ALPHABET, repeat=KEY_LENGTH-len(base)):
         check(''.join(base + i), data)
