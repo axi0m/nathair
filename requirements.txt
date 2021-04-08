@@ -42,7 +42,7 @@ pyppeteer==0.2.5; python_full_version >= '3.6.1' and python_full_version < '4.0.
 
 pyquery==1.4.3
 
-pyzipper==0.3.4
+pyzipper==0.3.5
 
 requests-html==0.10.0
 
