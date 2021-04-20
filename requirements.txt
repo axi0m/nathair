@@ -20,7 +20,7 @@ pycryptodomex==3.10.1
 pyee==8.1.0
 pyppeteer==0.2.5
 pyquery==1.4.3
-pyzipper==0.3.4
+pyzipper==0.3.5
 requests-html==0.10.0
 requests==2.25.1
 six==1.15.0
