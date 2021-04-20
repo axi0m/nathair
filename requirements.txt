@@ -25,7 +25,7 @@ requests-html==0.10.0
 requests==2.25.1
 six==1.15.0
 soupsieve==2.2.1 ; python_version >= '3.0'
-tqdm==4.57.0
+tqdm==4.60.0
 urllib3==1.26.4
 w3lib==1.22.0
 websockets==8.1
