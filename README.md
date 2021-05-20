@@ -29,42 +29,6 @@ However, if you decide you want to use the code, you're welcome to do so, and yo
 - git
 - pipenv (if you want to use the pip lock file)
 
-### Dependency Graph 05/02/2021
-
-```shell
-colorama==0.4.4
-cryptography==3.4.6
-  - cffi [required: >=1.12, installed: 1.14.5]
-    - pycparser [required: Any, installed: 2.20]
-numpy==1.20.1
-pexpect==4.8.0
-  - ptyprocess [required: >=0.5, installed: 0.7.0]
-pyzipper==0.3.4
-  - pycryptodomex [required: Any, installed: 3.10.1]
-requests-html==0.10.0
-  - bs4 [required: Any, installed: 0.0.1]
-    - beautifulsoup4 [required: Any, installed: 4.9.3]
-      - soupsieve [required: >1.2, installed: 2.2.1]
-  - fake-useragent [required: Any, installed: 0.1.11]
-  - parse [required: Any, installed: 1.19.0]
-  - pyppeteer [required: >=0.0.14, installed: 0.2.5]
-    - appdirs [required: >=1.4.3,<2.0.0, installed: 1.4.4]
-    - pyee [required: >=8.1.0,<9.0.0, installed: 8.1.0]
-    - tqdm [required: >=4.42.1,<5.0.0, installed: 4.57.0]
-    - urllib3 [required: >=1.25.8,<2.0.0, installed: 1.26.4]
-    - websockets [required: >=8.1,<9.0, installed: 8.1]
-  - pyquery [required: Any, installed: 1.4.3]
-    - cssselect [required: >0.7.9, installed: 1.1.0]
-    - lxml [required: >=2.1, installed: 4.6.3]
-  - requests [required: Any, installed: 2.25.1]
-    - certifi [required: >=2017.4.17, installed: 2020.12.5]
-    - chardet [required: >=3.0.2,<5, installed: 4.0.0]
-    - idna [required: >=2.5,<3, installed: 2.10]
-    - urllib3 [required: >=1.21.1,<1.27, installed: 1.26.4]
-  - w3lib [required: Any, installed: 1.22.0]
-    - six [required: >=1.4.1, installed: 1.15.0]
-  ```
-
 ## Using/Installing
 
 ⚠ I expect much of this not to work. Use at your own peril.
@@ -116,7 +80,6 @@ I do not recommend you use this code on a live system, this was created purely t
 - [VSCode](https://code.visualstudio.com/) - 🔥 IDE from Microsoft
 - [PyUp.io](https://pyup.io) - [ ~ Dependencies scanned by PyUp.io ~ ]
 - [LGTM](https://lgtm.com) - 🔐 Code quality and security scanning by LGTM/Semmle
-- [Hound](https://houndci.com) - 🔐 Additional static security analyzer
 
 ## Contributing
 
