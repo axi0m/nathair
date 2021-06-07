@@ -22,7 +22,7 @@
 
 appdirs==1.4.4
 
-astroid==2.5.7; python_version ~= '3.6'
+astroid==2.5.8; python_version ~= '3.6'
 
 atomicwrites==1.4.0; sys_platform == 'win32'
 
