@@ -12,6 +12,7 @@ pyzipper = "*"
 tqdm = "*"
 numpy = "*"
 requests-html = "*"
+rich = "*"
 
 [dev-packages]
 flake8 = "*"
