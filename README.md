@@ -91,7 +91,7 @@ No specific versioning system/format defined/selected.
 
 ## Author(s)
 
-axi0m
+[axi0m](https://github.com/axi0m)
 
 ## License
 
