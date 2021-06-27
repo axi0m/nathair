@@ -5,18 +5,21 @@ TODO: https://gist.github.com/tonybaloney/8f36998f1bd552a61643668de47f1ba7
 
 import argparse
 import asyncio
+import ipaddress
 import logging
 import multiprocessing as mp
 import socket
 import sys
-from threading import Thread
-from queue import Queue
 import time
+from queue import Queue
 from rich.console import Console
+from threading import Thread
 
+
+# Initialize rich Console
 console = Console()
 
-# default socket timeout
+# Set default socket timeout
 timeout = 1
 
 def toggle_verbose(flag):
@@ -64,17 +67,17 @@ def tcp_connect_threading(host: str, port: int, results: Queue):
         result = s.connect_ex((host, port))
         try:
             s.send(b"SampleData\r\n")
-            banner = s.recv(100)
-            #decoded_banner = repr(banner)
-        
+            #banner = s.recv(100)
             if result == 0:
                 results.put(port)
-                #banners.put(decoded_banner)
         except socket.timeout as e:
-            console.print(f'[!] Connection timed out, port [blue]{port}[/blue] is closed or host [green]{host}[/green] is down: {e}', style="bold yellow")
+            console.print(f'[!] Connection timed out, port [blue]{port}[/blue] is closed or host [green]{host}[/green] is down: [blue]{e}[/blue]', style="bold yellow")
             return False
         except ConnectionResetError as e:
             console.print(f'[!] Connection reset by peer [green]{host}[/green] on port [blue]{port}[/blue]', style="bold yellow")
+            return False
+        except BrokenPipeError as e:
+            console.print(f'[!] Broken pipe error, usually this means thread terminated while writes were still pending: [blue]{e}[/blue]', style="bold yellow")
             return False
         
 
@@ -185,7 +188,7 @@ async def host_scan_async(targetipv4, ports):
     results = []
     for port in ports:
         tasks.append(tcp_connect_async(targetipv4, port, results))
-    await asyncio.gather(*tasks)
+    await asyncio.gather(*tasks, return_exceptions=True)
     return results
 
 
@@ -260,8 +263,9 @@ def main():
     # If user provides verbose, increase logging level, otherwise default to info
     if verbose_mode:
         toggle_verbose(True)
-        print(verbose_mode)
+        console.print(f'[-] Enabled verbose_mode')
     else:
+        console.print(f'[-] Standard logging mode enabled')
         logging.basicConfig(level='ERROR')
         logging.info('Logging level in error mode (default)')
     
@@ -302,6 +306,7 @@ def main():
             results = asyncio.run(host_scan_async(targetipv4, integer_ports))
             for result in results:
                 console.print(f"[+] Port [blue]{result}[/blue] is open", style="bold green")
+            
 
 if __name__ == "__main__":
     start = time.perf_counter()
