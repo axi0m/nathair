@@ -141,6 +141,11 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/code,python,windows
+# Custom Entries
+# Ignore crack_zip.py related reference files
 crack/passwords.txt
 crack/dictionary.txt
 Password_Dump.txt
+
+# Ignore virusshare_md5_downloader.py hash.txt output of MD5 hashes
+hash.txt
