@@ -141,6 +141,12 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/code,python,windows
+
+# Custom entries
+# Used by crack_zip.py
 crack/passwords.txt
 crack/dictionary.txt
 Password_Dump.txt
+
+# Used by virusshare_md5_downloader.py
+hash.txt
