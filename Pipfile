@@ -7,12 +7,10 @@ url = "https://pypi.python.org/simple"
 cryptography = "*"
 requests = "*"
 pexpect = "*"
-colorama = "*"
 pyzipper = "*"
-tqdm = "*"
 numpy = "*"
-requests-html = "*"
 rich = "*"
+beautifulsoup4 = "*"
 
 [dev-packages]
 flake8 = "*"
