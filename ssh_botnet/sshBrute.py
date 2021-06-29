@@ -16,13 +16,13 @@ Fails = 0
 
 
 def connect(host, user, password, release):
-    ''' Wrapper for pxssh to connect to remote host via ssh
+    """Wrapper for pxssh to connect to remote host via ssh
 
     :param host: hostname of the target
     :param user: username to attempt to authenticate as
     :param password: Password to try to use to connect
     :param release: Boolean flag
-    '''
+    """
 
     global Found
     global Fails

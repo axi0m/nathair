@@ -3,6 +3,7 @@
 
 from cryptography.fernet import Fernet
 
+
 def write_key():
     """
     Generates a key and saves it to a file
@@ -12,12 +13,14 @@ def write_key():
     with open("key.key", "wb") as key_file:
         key_file.write(key)
 
+
 def load_key():
     """
     Load key from current working directory
     """
 
     return open("key.key", "rb").read()
+
 
 # Gen new key
 write_key()
@@ -30,7 +33,7 @@ message = "some secret message".encode()
 # init Fernet class
 f = Fernet(key)
 
-ciphertext  = f.encrypt(message)
+ciphertext = f.encrypt(message)
 
 # print ciphertext
 print(ciphertext)
