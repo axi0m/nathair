@@ -14,9 +14,11 @@ console = Console()
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    "--domain", nargs="?",
-    action="store", dest="domain",
-    help="The domain to lookup in Whois database."
+    "--domain",
+    nargs="?",
+    action="store",
+    dest="domain",
+    help="The domain to lookup in Whois database.",
 )
 parser.add_argument(
     "--apikey",
@@ -42,14 +44,17 @@ if not args.apikey:
 apiKey = args.apikey
 domainName = args.domain
 
+
 def perform_request(domainName, apiKey, url):
-    ''' HTTP Request to domain with specific headers and payload parameters '''
+    """ HTTP Request to domain with specific headers and payload parameters """
 
     # We set UA to MacOS Firefox browser traffic
-    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:86.0) Gecko/20100101 Firefox/86.0'}
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:86.0) Gecko/20100101 Firefox/86.0"
+    }
 
     # Set parameters as required by the WhoisXMLAPI
-    payload = {'domainName': domainName, 'apiKey': apiKey, 'outputFormat': 'JSON'}
+    payload = {"domainName": domainName, "apiKey": apiKey, "outputFormat": "JSON"}
 
     # Make the request passing in our headers and parameters
     r = requests.get(url, params=payload, headers=headers)
@@ -91,8 +96,10 @@ def parse_whois(whoisRecord: dict, domainName: str):
 
 
 def main():
-    ''' Main function '''
-    result = perform_request(domainName, apiKey, 'https://www.whoisxmlapi.com/whoisserver/WhoisService')
+    """ Main function """
+    result = perform_request(
+        domainName, apiKey, "https://www.whoisxmlapi.com/whoisserver/WhoisService"
+    )
 
     # Get JSON
     json_response = result.json()
@@ -114,6 +121,7 @@ def main():
     console.print(f"[+] Registrant state for domain {domainName} is: [blue]{limited_info['State']}[/blue]", style="bold green")
     console.print(f"[+] Registrant country for domain {domainName} is: [blue]{limited_info['Country']}[/blue]", style="bold green")
     console.print(f"[+] Registrant country code for domain {domainName} is: [blue]{limited_info['Country Code']}[/blue]", style="bold green")
+
 
 
 

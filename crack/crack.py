@@ -44,7 +44,9 @@ parser.add_argument(
     help="Print the current version of the program",
 )
 parser.add_argument(
-    "--examples", action="store_true", help="Print examples of running the program",
+    "--examples",
+    action="store_true",
+    help="Print examples of running the program",
 )
 parser.add_argument(
     "--debug", action="store_true", help="Toggle debug level logging to console"

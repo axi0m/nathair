@@ -9,12 +9,14 @@
 
 # Violent Python
 
-Selection of various scripts from TJ O'Connor's Violent Python by Syngress. The scripts tend to be targeted at specific security related needs, including:
+Selection of various scripts inspired by TJ O'Connor's Violent Python by Syngress. The scripts tend to be targeted at specific security related needs, including:
 
-1. Dictionary attack based zip file cracker
-2. Rudimentary vulnerability scanner
-3. Offline Linux password cracker (dictionary based)
-4. SSH Botnet
+1. Encrypted zip file dictionary cracker
+2. Rudimentary port scanner
+3. Offline Linux password cracker (dictionary based, only supports MD5 currently)
+4. SSH client/server botnet (Partially implemented)
+5. Whois DB client (Requires whoisxml API key)
+6. MD5 hash generator for VirusShare.com malware corpus (Scrapes public hash URLs)
 
 ## Getting Started
 
@@ -25,9 +27,9 @@ However, if you decide you want to use the code, you're welcome to do so, and yo
 
 ### Prerequisites
 
-- Python 3.6+
+- Python 3.7+
 - git
-- pipenv (if you want to use the pip lock file)
+- pipenv
 
 ## Using/Installing
 

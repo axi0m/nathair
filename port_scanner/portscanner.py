@@ -22,24 +22,25 @@ console = Console()
 # Set default socket timeout
 timeout = 1
 
+
 def toggle_verbose(flag):
-    ''' Toggle verbose logging on/off 
-    
+    """Toggle verbose logging on/off
+
     :param flag: enable or disable logging in verbose(read DEBUG) mode
-    '''
+    """
 
     if flag:
-        logging.basicConfig(level='DEBUG')
-        logging.debug('Logging in debug mode')
+        logging.basicConfig(level="DEBUG")
+        logging.debug("Logging in debug mode")
 
 
 def tcp_connect_mp(host: str, port: int, results: mp.Queue):
-    ''' TCP CONNECT and banner receiver (multiprocessing)
+    """TCP CONNECT and banner receiver (multiprocessing)
 
     :param host: IPv4 address of host to target
     :param port: TCP port of host to CONNECT to
     :param results: Queue to store our results
-    '''
+    """
 
     socket.setdefaulttimeout(timeout)
     conn_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -54,12 +55,12 @@ def tcp_connect_mp(host: str, port: int, results: mp.Queue):
 
 
 def tcp_connect_threading(host: str, port: int, results: Queue):
-    ''' TCP CONNECT and banner receiver (threading)
+    """TCP CONNECT and banner receiver (threading)
 
     :param host: IPv4 address of host to target
     :param port: TCP port of host to CONNECT to
     :param results: Queue to store our results
-    '''
+    """
     socket.setdefaulttimeout(timeout)
     conn_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -82,7 +83,7 @@ def tcp_connect_threading(host: str, port: int, results: Queue):
         
 
 async def tcp_connect_async(host: str, port: int, results: list):
-    """ TCP CONNECT and banner receiver (async)
+    """TCP CONNECT and banner receiver (async)
 
     :param host: IPv4 address of host to target
     :param port: TCP port of host to CONNECT to
@@ -99,28 +100,28 @@ async def tcp_connect_async(host: str, port: int, results: list):
 
 
 def convert_hostname(host):
-    """ Wrapper for socket.gethostbyname to get IPv4 address
+    """Wrapper for socket.gethostbyname to get IPv4 address
 
     :param host: DNS name or IPv4 address of host
     """
 
     try:
         targetipv4 = socket.gethostbyname(host)
-        logging.debug(f'[*] Host IPv4 address resolved via DNS is {targetipv4}')
+        logging.debug(f"[*] Host IPv4 address resolved via DNS is {targetipv4}")
         return targetipv4
 
     except socket.error as sock_err:
-        logging.error(f'[!] Socket error encountered: {sock_err}')
+        logging.error(f"[!] Socket error encountered: {sock_err}")
         return None
 
     except Exception as generic_err:
-        logging.error(f'[!] Cannot resolve host {host}: {generic_err}')
+        logging.error(f"[!] Cannot resolve host {host}: {generic_err}")
         return None
 
 
 def host_scan_mp(targetipv4, ports):
-    """ Perform scan for given hostname and TCP port number(s)
-    
+    """Perform scan for given hostname and TCP port number(s)
+
     :param targetipv4: IPv4 of host to target
     :param ports: List of TCP ports to connect to
     """
@@ -129,7 +130,7 @@ def host_scan_mp(targetipv4, ports):
     processes = []
 
     # Tell multiprocessing to use spawn method
-    mp.set_start_method('spawn')
+    mp.set_start_method("spawn")
 
     # Init our process pool manager
     pool_manager = mp.Manager()
@@ -142,7 +143,9 @@ def host_scan_mp(targetipv4, ports):
 
         # For each port we'll spawn a process to run our function
         for port in ports:
-            processes.append(pool.apply_async(tcp_connect_mp, (targetipv4, port, outputs)))
+            processes.append(
+                pool.apply_async(tcp_connect_mp, (targetipv4, port, outputs))
+            )
         for process in processes:
             process.get()
         while not outputs.empty():
@@ -150,7 +153,7 @@ def host_scan_mp(targetipv4, ports):
 
 
 def host_scan_threading(targetipv4, ports):
-    """ Perform scan given hostname and TCP port number(s) using threads
+    """Perform scan given hostname and TCP port number(s) using threads
 
     :param targetipv4: IPv4 of host to target
     "param ports: List of TCP ports to connect to
@@ -171,14 +174,14 @@ def host_scan_threading(targetipv4, ports):
     # Join our threads together once all have terminated successfully
     for t in threads:
         t.join()
-    
+
     # As the threads finish, the results queue object will grow in size, print the values of the queue
     while not results.empty():
         console.print(f'[+] Port [blue]{results.get()}[/blue] is open', style="bold green")
 
 
 async def host_scan_async(targetipv4, ports):
-    """ Perform scan given hostname and TCP port number(s) using async coroutines
+    """Perform scan given hostname and TCP port number(s) using async coroutines
 
     :param targetipv4: IPv4 of host to target
     "param ports: List of TCP ports to connect to
@@ -205,26 +208,16 @@ def main():
         dest="ports",
         help="Port(s) to scan, csv and space delimited",
     )
+    parser.add_argument("--verbose", action="store_true", help="Enable verbose logging")
+    parser.add_argument("--version", action="version", version="{prog} + {__version__}")
     parser.add_argument(
-        "--verbose", 
-        action="store_true", 
-        help="Enable verbose logging"
-    )
-    parser.add_argument(
-        "--version", 
-        action="version", 
-        version="{prog} + {__version__}"
-    )
-    parser.add_argument(
-        "--examples", 
-        action="store_true", 
-        help="Display examples and exit"
+        "--examples", action="store_true", help="Display examples and exit"
     )
     parser.add_argument(
         "--mode",
         action="store",
         dest="mode",
-        help="Mode to operate in, using processes, threads or async functions. processes, threads, async are acceptable values."
+        help="Mode to operate in, using processes, threads or async functions. processes, threads, async are acceptable values.",
     )
 
     # Parse our arguments into internal variables
@@ -236,7 +229,7 @@ def main():
     examples = args.examples
     verbose_mode = args.verbose
     mode = args.mode
-    
+
     if examples:
         console.print(
             '''
@@ -282,7 +275,7 @@ def main():
         sys.exit(0)
     
     # Remove the comma and space from list of ports
-    stripped = [port.strip(', ') for port in ports]
+    stripped = [port.strip(", ") for port in ports]
 
     # Convert list of strings to list of integers
     integer_ports = [int(port) for port in stripped]
@@ -307,6 +300,7 @@ def main():
             for result in results:
                 console.print(f"[+] Port [blue]{result}[/blue] is open", style="bold green")
             
+
 
 if __name__ == "__main__":
     start = time.perf_counter()

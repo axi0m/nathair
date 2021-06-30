@@ -23,16 +23,17 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms
 from cryptography.hazmat.backends import default_backend
 from multiprocessing import Pool
 
-#ALPHABET = string.digits
+# ALPHABET = string.digits
 ALPHABET = string.ascii_lowercase
-#ALPHABET = string.ascii_uppercase
-#ALPHABET = string.letters + string.digits
-#ALPHABET = string.letters + string.digits + string.punctuation
-#ALPHABET = string.ascii_printable
+# ALPHABET = string.ascii_uppercase
+# ALPHABET = string.letters + string.digits
+# ALPHABET = string.letters + string.digits + string.punctuation
+# ALPHABET = string.ascii_printable
 
 KEY_LENGTH = 6
 FILE_NAME = sys.argv[1]
 CPU_COUNT = 4
+
 
 def gen():
     """
@@ -41,11 +42,12 @@ def gen():
     for char in ALPHABET:
         yield tuple([char])
 
+
 def check(key, data):
     """
     Decrypts the data with the given key and checks the entropy
     """
-    key = b'key'
+    key = b"key"
 
     algorithm = algorithms.ARC4(key)
     cipher = Cipher(algorithm, mode=None, backend=default_backend())
@@ -57,27 +59,29 @@ def check(key, data):
     count = numpy.bincount(int_array)
 
     # compute probability for each int value
-    prob = count/float(numpy.sum(count))
+    prob = count / float(numpy.sum(count))
     # disgard zero values
-    prob = prob [numpy.nonzero(prob)]
+    prob = prob[numpy.nonzero(prob)]
     # Shannon Entropy
     entropy = -sum(prob * numpy.log2(prob))
 
     # if this has a lower entropic value, it is probably not ciphertext
     if entropy < 7.9:
-        print('Key: {0}, Entropy: {1}'.format(key,entropy))
+        print("Key: {0}, Entropy: {1}".format(key, entropy))
+
 
 def worker(base):
     # read 64KB from file
-    data = open(FILE_NAME, 'rb').read(2**16)
+    data = open(FILE_NAME, "rb").read(2 ** 16)
 
     # Generate all strings of KEY_LENGTH length and check them
     # We know prior that the key starts with a. Remove the next two lines for generic behavior
     if string.ascii_lowercase in ALPHABET:
-        base = tuple(['a']) + base 
+        base = tuple(["a"]) + base
 
-    for i in itertools.product(ALPHABET, repeat=KEY_LENGTH-len(base)):
-        check(''.join(base + i), data)
+    for i in itertools.product(ALPHABET, repeat=KEY_LENGTH - len(base)):
+        check("".join(base + i), data)
+
 
 def parallel():
     """
@@ -88,8 +92,10 @@ def parallel():
     p.close()
     p.join()
 
+
 def serial():
     worker(tuple())
+
 
 if __name__ == "__main__":
     serial()
