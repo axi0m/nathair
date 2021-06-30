@@ -27,9 +27,9 @@ However, if you decide you want to use the code, you're welcome to do so, and yo
 
 ### Prerequisites
 
-- Python 3.6+
+- Python 3.7+
 - git
-- pipenv (if you want to use the pip lock file)
+- pipenv
 
 ## Using/Installing
 
