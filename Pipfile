@@ -9,6 +9,7 @@ requests = "*"
 pexpect = "*"
 pyzipper = "*"
 numpy = "*"
+rich = "*"
 
 [dev-packages]
 flake8 = "*"
@@ -16,6 +17,3 @@ pytest = "*"
 dlint = "*"
 bandit = "*"
 pylint = "*"
-
-[requires]
-python_version = "3.7"
