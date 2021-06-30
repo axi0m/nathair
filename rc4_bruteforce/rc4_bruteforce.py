@@ -10,8 +10,8 @@
 
 """
 Turns out that ARC4 may not be compatible with Python 3.7
-Also turns out that PyCrypto has been dead for 4 years. 
-Migrating to 'cryptography' 
+Also turns out that PyCrypto has been dead for 4 years.
+Migrating to 'cryptography'
 
 """
 

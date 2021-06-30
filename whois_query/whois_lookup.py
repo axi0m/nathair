@@ -21,11 +21,7 @@ parser.add_argument(
     help="The domain to lookup in Whois database.",
 )
 parser.add_argument(
-    "--apikey",
-    nargs="?",
-    action="store",
-    dest="apikey",
-    help="The secret API key",
+    "--apikey", nargs="?", action="store", dest="apikey", help="The secret API key"
 )
 
 # Parse our arguments provided at CLI

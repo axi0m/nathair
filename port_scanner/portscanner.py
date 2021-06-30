@@ -247,7 +247,7 @@ def main():
         console.print(
             """
     ## EXAMPLES ##
-    
+
     Scan a host on TCP port 22
         portscanner.py --host 192.168.1.1 --ports 22 --mode threads
 
