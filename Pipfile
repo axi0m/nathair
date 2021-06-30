@@ -1,0 +1,21 @@
+[[source]]
+verify_ssl = true
+name = "pypi"
+url = "https://pypi.python.org/simple"
+
+[packages]
+cryptography = "*"
+requests = "*"
+pexpect = "*"
+pyzipper = "*"
+numpy = "*"
+
+[dev-packages]
+flake8 = "*"
+pytest = "*"
+dlint = "*"
+bandit = "*"
+pylint = "*"
+
+[requires]
+python_version = "3.7"

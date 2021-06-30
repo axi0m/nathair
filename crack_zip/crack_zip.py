@@ -156,7 +156,7 @@ def main():
     if result_pyzipper:
         with pyzipper.AESZipFile(zfile) as archive:
             with open(pfile, "r") as dictFile:
-                for word in dictFile:
+                for word in track(dictFile, description="Checking words in dictionary.."):
 
                     password = word.strip("\n")
                     extraction_result = extract_file(archive, password)
@@ -174,7 +174,7 @@ def main():
     else:
         with zipfile.ZipFile(zfile) as archive:
             with open(pfile, "r") as dictFile:
-                for word in dictFile:
+                for word in track(dictFile, description="Checking words in dictionary.."):
 
                     password = word.strip("\n")
                     extraction_result = extract_file(archive, password)

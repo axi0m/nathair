@@ -52,7 +52,7 @@ def check(key, data):
     algorithm = algorithms.ARC4(key)
     cipher = Cipher(algorithm, mode=None, backend=default_backend())
     decryptor = cipher.decryptor()
-    decr = decryptor.update(data)
+    decr = decryptor.update(data) # lgtm [py/weak-cryptographic-algorithm]
 
     # interpret decrypted data as an int array
     int_array = numpy.frombuffer(decr, dtype=numpy.uint8)
