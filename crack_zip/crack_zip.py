@@ -81,7 +81,9 @@ def extract_file(zfile, password):
 
     try:
         zfile.extractall(pwd=password.encode("utf-8"))
-        console.print(f"[+] Password found: [blue]{password}[/blue]", style="bold green")
+        console.print(
+            f"[+] Password found: [blue]{password}[/blue]", style="bold green"
+        )
         return (True, password)
 
     except RuntimeError as runerr:
@@ -101,20 +103,27 @@ def main():
 
     if result_pyzipper:
         console.print(
-            f"[+] You have pyzipper installed, AES encrypted Zip support enabled!", style="bold green"
+            f"[+] You have pyzipper installed, AES encrypted Zip support enabled!",
+            style="bold green",
         )
     if not result_pyzipper:
         console.print(
-            f"[!] You have not imported the pyzipper module, AES encryption for Zip archives not enabled", style="bold yellow"
+            f"[!] You have not imported the pyzipper module, AES encryption for Zip archives not enabled",
+            style="bold yellow",
         )
 
     # Check if file is a Zip file by magic number
     result_zip = test_zipfile(zfile)
 
     if result_zip:
-        console.print(f"[+] File [blue]{zfile}[/blue] is a valid Zip archive", style="bold green")
+        console.print(
+            f"[+] File [blue]{zfile}[/blue] is a valid Zip archive", style="bold green"
+        )
     if not result_zip:
-        console.print(f"[!] File [green]{zfile}[/green] is not a valid Zip archive, exiting...", style="bold red")
+        console.print(
+            f"[!] File [green]{zfile}[/green] is not a valid Zip archive, exiting...",
+            style="bold red",
+        )
         sys.exit(1)
 
     # Check if file exists
@@ -123,7 +132,9 @@ def main():
     if result_exists:
         console.print(f"[+] File [blue]{zfile}[/blue] exists", style="bold green")
     if not result_exists:
-        console.print(f"[!] File [green]{zfile}[/green] doesn't exist", style="bold red")
+        console.print(
+            f"[!] File [green]{zfile}[/green] doesn't exist", style="bold red"
+        )
         sys.exit(1)
 
     # Check if file can be read
@@ -132,11 +143,14 @@ def main():
     if result_read:
         console.print(f"[+] File [blue]{zfile}[/blue] is readable", style="bold green")
     if not result_read:
-        console.print(f"[!] File [green]{zfile}[/green] cannot be read", style="bold red")
+        console.print(
+            f"[!] File [green]{zfile}[/green] cannot be read", style="bold red"
+        )
         sys.exit(1)
 
     console.print(
-        f"[-] Begin extraction subroutine for archive [white]{zfile}[/white] with provided password file: [white]{pfile}[/white]", style="bold yellow"
+        f"[-] Begin extraction subroutine for archive [white]{zfile}[/white] with provided password file: [white]{pfile}[/white]",
+        style="bold yellow",
     )
 
     if result_pyzipper:
@@ -149,7 +163,8 @@ def main():
 
                     if extraction_result[0]:
                         console.print(
-                            f"[*] Successfully extracted password-protected Zip archive: [blue]{zfile}[/blue]", style="bold green"
+                            f"[*] Successfully extracted password-protected Zip archive: [blue]{zfile}[/blue]",
+                            style="bold green",
                         )
                         break
 
@@ -166,18 +181,21 @@ def main():
 
                     if extraction_result[0]:
                         console.print(
-                            f"[*] Successfully extracted password-protected Zip archive: [blue]{zfile}[/blue]", style="bold green"
+                            f"[*] Successfully extracted password-protected Zip archive: [blue]{zfile}[/blue]",
+                            style="bold green",
                         )
                         break
 
                     elif not extraction_result[0]:
                         console.print(
-                            f"[!] Failed to extract password-protected Zip archive: {zfile}", style="bold red"
+                            f"[!] Failed to extract password-protected Zip archive: {zfile}",
+                            style="bold red",
                         )
 
                     if "compress_type=99" in repr(extraction_result[1]):
                         console.print(
-                            f"[!] Fatal error archive {zfile} is AES encrypted and AES encryption support is not present!", style="bold red"
+                            f"[!] Fatal error archive {zfile} is AES encrypted and AES encryption support is not present!",
+                            style="bold red",
                         )
                         sys.exit(1)
                     continue

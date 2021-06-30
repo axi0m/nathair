@@ -63,34 +63,37 @@ def perform_request(domainName, apiKey, url):
 
 
 def parse_whois(whoisRecord: dict, domainName: str):
-    ''' Input whois record dict and return select fields to console '''
+    """ Input whois record dict and return select fields to console """
 
     # Custom dictionary
     limited_info = {}
 
     # There are some records mapped to organization itself, data structure is different, e.g. ebay.com
-    registrarName = whoisRecord.get('registrarName')
-    registryData = whoisRecord.get('registryData')
-    registrant = whoisRecord.get('registrant')
+    registrarName = whoisRecord.get("registrarName")
+    registryData = whoisRecord.get("registryData")
+    registrant = whoisRecord.get("registrant")
 
     if registrant is None and registryData is None:
-        console.print(f"[!] No registry/registrar information in Whois record for domain: [blue]{domainName}[/blue]", style="bold red")
+        console.print(
+            f"[!] No registry/registrar information in Whois record for domain: [blue]{domainName}[/blue]",
+            style="bold red",
+        )
         return False
 
     if registrant is None:
-        registrant = registryData.get('registrant')
+        registrant = registryData.get("registrant")
 
     if registrant is not None:
-        organization = registrant.get('organization')
-        state = registrant.get('state')
-        country = registrant.get('country')
-        country_code = registrant.get('countryCode')
-    
-        limited_info.update({'Registrar Name': registrarName})
-        limited_info.update({'Country Code': country_code})
-        limited_info.update({'Country': country})
-        limited_info.update({'State': state})
-        limited_info.update({'Organization': organization})
+        organization = registrant.get("organization")
+        state = registrant.get("state")
+        country = registrant.get("country")
+        country_code = registrant.get("countryCode")
+
+        limited_info.update({"Registrar Name": registrarName})
+        limited_info.update({"Country Code": country_code})
+        limited_info.update({"Country": country})
+        limited_info.update({"State": state})
+        limited_info.update({"Organization": organization})
 
         return limited_info
 
@@ -109,20 +112,35 @@ def main():
 
     # If 401 remind user API key may be wrong
     if result.status_code == 401:
-        console.print(f"[!] HTTP 401 Unauthorized - Verify your API key", style="bold red")
+        console.print(
+            f"[!] HTTP 401 Unauthorized - Verify your API key", style="bold red"
+        )
         sys.exit(1)
 
     # Parse the whois record
-    whois_record = json_response.get('WhoisRecord')
+    whois_record = json_response.get("WhoisRecord")
     limited_info = parse_whois(whois_record, domainName)
 
-    console.print(f"[+] Registrar for domain {domainName} is: [blue]{limited_info['Registrar Name']}[/blue]", style="bold green")
-    console.print(f"[+] Registrant organization for domain {domainName} is: [blue]{limited_info['Organization']}[/blue]", style="bold green")
-    console.print(f"[+] Registrant state for domain {domainName} is: [blue]{limited_info['State']}[/blue]", style="bold green")
-    console.print(f"[+] Registrant country for domain {domainName} is: [blue]{limited_info['Country']}[/blue]", style="bold green")
-    console.print(f"[+] Registrant country code for domain {domainName} is: [blue]{limited_info['Country Code']}[/blue]", style="bold green")
-
-
+    console.print(
+        f"[+] Registrar for domain {domainName} is: [blue]{limited_info['Registrar Name']}[/blue]",
+        style="bold green",
+    )
+    console.print(
+        f"[+] Registrant organization for domain {domainName} is: [blue]{limited_info['Organization']}[/blue]",
+        style="bold green",
+    )
+    console.print(
+        f"[+] Registrant state for domain {domainName} is: [blue]{limited_info['State']}[/blue]",
+        style="bold green",
+    )
+    console.print(
+        f"[+] Registrant country for domain {domainName} is: [blue]{limited_info['Country']}[/blue]",
+        style="bold green",
+    )
+    console.print(
+        f"[+] Registrant country code for domain {domainName} is: [blue]{limited_info['Country Code']}[/blue]",
+        style="bold green",
+    )
 
 
 if __name__ == "__main__":
