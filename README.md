@@ -4,7 +4,7 @@
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/axi0m/violent_python.svg?logo=lgtm&logoWidth=18&style=flat-square)](https://lgtm.com/projects/g/axi0m/violent_python/context:python)
 [![Code Style Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 [![Updates](https://pyup.io/repos/github/axi0m/violent_python/shield.svg)](https://pyup.io/repos/github/axi0m/violent_python/)
-[![Python application](https://github.com/axi0m/violent_python/workflows/Python%20application/badge.svg?branch=master)](https://github.com/axi0m/violent_python/actions)
+
 
 # Violent Python
 
