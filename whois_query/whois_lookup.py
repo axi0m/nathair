@@ -2,9 +2,10 @@
 
 import requests
 import argparse
-from colorama import Fore, init
+import sys
+from rich.console import Console
 
-init(autoreset=True)
+console = Console()
 
 # https://user.whoisxmlapi.com/products <- view usage limits
 # default is 500 API queries per month for free API key
@@ -33,11 +34,11 @@ args = parser.parse_args()
 # Verify the variables were provided or print help
 if not args.domain:
     parser.print_help()
-    exit(1)
+    sys.exit(1)
 
 if not args.apikey:
     parser.print_help()
-    exit(1)
+    sys.exit(1)
 
 # Set to cleaner variable names for ease later on
 apiKey = args.apikey
@@ -61,6 +62,42 @@ def perform_request(domainName, apiKey, url):
     return r
 
 
+def parse_whois(whoisRecord: dict, domainName: str):
+    """ Input whois record dict and return select fields to console """
+
+    # Custom dictionary
+    limited_info = {}
+
+    # There are some records mapped to organization itself, data structure is different, e.g. ebay.com
+    registrarName = whoisRecord.get("registrarName")
+    registryData = whoisRecord.get("registryData")
+    registrant = whoisRecord.get("registrant")
+
+    if registrant is None and registryData is None:
+        console.print(
+            f"[!] No registry/registrar information in Whois record for domain: [blue]{domainName}[/blue]",
+            style="bold red",
+        )
+        return False
+
+    if registrant is None:
+        registrant = registryData.get("registrant")
+
+    if registrant is not None:
+        organization = registrant.get("organization")
+        state = registrant.get("state")
+        country = registrant.get("country")
+        country_code = registrant.get("countryCode")
+
+        limited_info.update({"Registrar Name": registrarName})
+        limited_info.update({"Country Code": country_code})
+        limited_info.update({"Country": country})
+        limited_info.update({"State": state})
+        limited_info.update({"Organization": organization})
+
+        return limited_info
+
+
 def main():
     """ Main function """
     result = perform_request(
@@ -69,51 +106,41 @@ def main():
 
     # Get JSON
     json_response = result.json()
-    # print(json_response)
 
-    # Parse out the items of interest
+    # for k,v in json_response.items():
+    #     console.print(k,v)
+
+    # If 401 remind user API key may be wrong
+    if result.status_code == 401:
+        console.print(
+            f"[!] HTTP 401 Unauthorized - Verify your API key", style="bold red"
+        )
+        sys.exit(1)
+
+    # Parse the whois record
     whois_record = json_response.get("WhoisRecord")
-    registrar = whois_record.get("registrarName")
-    registryData = json_response.get("registryData")
+    limited_info = parse_whois(whois_record, domainName)
 
-    print(Fore.GREEN + "Registrar for domain {} is : {}".format(domainName, registrar))
-
-    if registryData is not None:
-        registrant = registryData.get("registrant")
-
-        if registrant is not None:
-            organization = registrant.get("organization")
-            state = registrant.get("state")
-            country = registrant.get("country")
-            country_code = registrant.get("countryCode")
-
-            print(
-                f"Registrant organization for domain {domainName} is : {organization}"
-            )
-            print(f"Registrant state for domain {domainName} is : {state}")
-            print(f"Registrant country for domain {domainName} is : {country}")
-            print(
-                f"Registrant country code for domain {domainName} is : {country_code}"
-            )
-        else:
-            print(
-                f"[!] Registrant key was not found in registry data for domain: {domainName}"
-            )
-    else:
-        registrant = whois_record.get("registrant")
-        """ SAMPLE RESPONSE 
-        {'name': 'Domain Administrator', 'organization': 'eBay Inc.', 'street1': '2145 Hamilton Avenue,', 'city': 'San Jose', 'state': 'CA', 'postalCode': '95125', 'country': 'UNITED STATES', 'countryCode': 'US', 'email': 'hostmaster@ebay.com', 'telephone': '14083769801', 'rawText': 'Registrant Name: Domain Administrator\nRegistrant Organization: eBay Inc.\nRegistrant Street: 2145 Hamilton Avenue,\nRegistrant City: San Jose\nRegistrant State/Province: CA\nRegistrant Postal Code: 95125\nRegistrant Country: US\nRegistrant Phone: +1.4083769801\nRegistrant Email: hostmaster@ebay.com'}
-        """
-
-        organization = registrant.get("organization")
-        state = registrant.get("state")
-        country = registrant.get("country")
-        country_code = registrant.get("countryCode")
-
-        print(f"Registrant organization for domain {domainName} is : {organization}")
-        print(f"Registrant state for domain {domainName} is : {state}")
-        print(f"Registrant country for domain {domainName} is : {country}")
-        print(f"Registrant country code for domain {domainName} is : {country_code}")
+    console.print(
+        f"[+] Registrar for domain {domainName} is: [blue]{limited_info['Registrar Name']}[/blue]",
+        style="bold green",
+    )
+    console.print(
+        f"[+] Registrant organization for domain {domainName} is: [blue]{limited_info['Organization']}[/blue]",
+        style="bold green",
+    )
+    console.print(
+        f"[+] Registrant state for domain {domainName} is: [blue]{limited_info['State']}[/blue]",
+        style="bold green",
+    )
+    console.print(
+        f"[+] Registrant country for domain {domainName} is: [blue]{limited_info['Country']}[/blue]",
+        style="bold green",
+    )
+    console.print(
+        f"[+] Registrant country code for domain {domainName} is: [blue]{limited_info['Country Code']}[/blue]",
+        style="bold green",
+    )
 
 
 if __name__ == "__main__":

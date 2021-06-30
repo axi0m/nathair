@@ -5,19 +5,21 @@ TODO: https://gist.github.com/tonybaloney/8f36998f1bd552a61643668de47f1ba7
 
 import argparse
 import asyncio
+import ipaddress
 import logging
 import multiprocessing as mp
 import socket
-from threading import Thread
-from queue import Queue
+import sys
 import time
+from queue import Queue
+from rich.console import Console
+from threading import Thread
 
-# from colorama import Fore, init
 
-# init colorama
-# init()
+# Initialize rich Console
+console = Console()
 
-# default socket timeout
+# Set default socket timeout
 timeout = 1
 
 
@@ -64,13 +66,29 @@ def tcp_connect_threading(host: str, port: int, results: Queue):
 
     with conn_socket as s:
         result = s.connect_ex((host, port))
-        s.send(b"SampleData\r\n")
-        banner = s.recv(100)
-        decoded_banner = repr(banner)
-
-        if result == 0:
-            results.put(port)
-            # banners.put(decoded_banner)
+        try:
+            s.send(b"SampleData\r\n")
+            # banner = s.recv(100)
+            if result == 0:
+                results.put(port)
+        except socket.timeout as e:
+            console.print(
+                f"[!] Connection timed out, port [blue]{port}[/blue] is closed or host [green]{host}[/green] is down: [blue]{e}[/blue]",
+                style="bold yellow",
+            )
+            return False
+        except ConnectionResetError as e:
+            console.print(
+                f"[!] Connection reset by peer [green]{host}[/green] on port [blue]{port}[/blue]",
+                style="bold yellow",
+            )
+            return False
+        except BrokenPipeError as e:
+            console.print(
+                f"[!] Broken pipe error, usually this means thread terminated while writes were still pending: [blue]{e}[/blue]",
+                style="bold yellow",
+            )
+            return False
 
 
 async def tcp_connect_async(host: str, port: int, results: list):
@@ -140,7 +158,9 @@ def host_scan_mp(targetipv4, ports):
         for process in processes:
             process.get()
         while not outputs.empty():
-            print("Port {0} is open".format(outputs.get()))
+            console.print(
+                f"[+] Port [blue]{outputs.get()}[/blue] is open", style="bold green"
+            )
 
 
 def host_scan_threading(targetipv4, ports):
@@ -168,7 +188,9 @@ def host_scan_threading(targetipv4, ports):
 
     # As the threads finish, the results queue object will grow in size, print the values of the queue
     while not results.empty():
-        print("Port {0} is open".format(results.get()))
+        console.print(
+            f"[+] Port [blue]{results.get()}[/blue] is open", style="bold green"
+        )
 
 
 async def host_scan_async(targetipv4, ports):
@@ -182,7 +204,7 @@ async def host_scan_async(targetipv4, ports):
     results = []
     for port in ports:
         tasks.append(tcp_connect_async(targetipv4, port, results))
-    await asyncio.gather(*tasks)
+    await asyncio.gather(*tasks, return_exceptions=True)
     return results
 
 
@@ -222,7 +244,7 @@ def main():
     mode = args.mode
 
     if examples:
-        print(
+        console.print(
             """
     ## EXAMPLES ##
     
@@ -231,40 +253,46 @@ def main():
 
     Scan a host on multiple TCP ports
         portscanner.py --host 192.168.1.1 --ports 9090, 443, 25 --mode processes
-            """
+            """,
+            style="bold green",
         )
-        exit(0)
+        sys.exit(0)
 
     # Check user provided us values for host and port(s)
     if host is None:
         parser.print_help()
-        exit(0)
+        sys.exit(0)
 
     if ports is None:
         parser.print_help()
-        exit(0)
+        sys.exit(0)
 
     # If user provides verbose, increase logging level, otherwise default to info
     if verbose_mode:
         toggle_verbose(True)
-        print(verbose_mode)
+        console.print(f"[-] Enabled verbose_mode")
     else:
+        console.print(f"[-] Standard logging mode enabled")
         logging.basicConfig(level="ERROR")
         logging.info("Logging level in error mode (default)")
 
     # Check if user provided mode
     if mode is None:
-        print(f"Provide mode to operate in: processes, threads, async")
+        console.print(
+            f"[!] Provide mode to operate in: processes, threads, async",
+            style="bold yellow",
+        )
         parser.print_help()
-        exit(0)
+        sys.exit(0)
 
     # Check if mode is viable option or not
     if mode != "threads" and mode != "processes" and mode != "async":
-        print(
-            f"Invalid mode provided, acceptable values are: processes, threads, async"
+        console.print(
+            f"[!] Invalid mode provided, acceptable values are: processes, threads, async",
+            style="bold yellow",
         )
         parser.print_help()
-        exit(0)
+        sys.exit(0)
 
     # Remove the comma and space from list of ports
     stripped = [port.strip(", ") for port in ports]
@@ -290,11 +318,13 @@ def main():
         if targetipv4 and integer_ports:
             results = asyncio.run(host_scan_async(targetipv4, integer_ports))
             for result in results:
-                print("port {0} is open".format(result))
+                console.print(
+                    f"[+] Port [blue]{result}[/blue] is open", style="bold green"
+                )
 
 
 if __name__ == "__main__":
     start = time.perf_counter()
     main()
     stop = time.perf_counter()
-    print(f"[*] Execution time was: {stop-start:0.4f} seconds")
+    console.print(f"[*] Execution time was: {stop-start:0.4f} seconds")
