@@ -29,7 +29,9 @@ def connect(host, user, password, release):
     try:
         s = pxssh.pxssh()
         s.login(host, user, password)
-        print(f"[+] Password Found: {password}")
+        print(
+            f"[+] Password Found: {password}"
+        )  # lgtm [py/clear-text-logging-sensitive-data]
         Found = True
     except Exception as e:
         if "read_nonblocking" in str(e):
@@ -89,7 +91,9 @@ def main():
                 exit(1)
             connection_lock.acquire()
             password = line.strip("\r").strip("\n")
-            print(f"[-] Testing: {password}")
+            print(
+                f"[-] Testing: {password}"
+            )  # lgtm [py/clear-text-logging-sensitive-data]
             t = Thread(target=connect, args=(host, user, password, True))
             t.start()
             threads.append(t)

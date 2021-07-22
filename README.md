@@ -53,20 +53,6 @@ python <filname>.py -h
 python <filename>.py --examples
 ```
 
-## Testing
-
-```bash
-pipenv install --dev
-python -m pytest
-```
-
-### Testing Coverage
-
-```bash
-pipenv install --dev
-python -m pytest --cov
-```
-
 ## Coding Style
 
 [Black](https://github.com/psf/black) and [PEP8](https://www.python.org/dev/peps/pep-0008/)

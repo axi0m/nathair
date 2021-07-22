@@ -5,7 +5,6 @@ TODO: https://gist.github.com/tonybaloney/8f36998f1bd552a61643668de47f1ba7
 
 import argparse
 import asyncio
-import ipaddress
 import logging
 import multiprocessing as mp
 import socket
@@ -103,6 +102,7 @@ async def tcp_connect_async(host: str, port: int, results: list):
         r, w = await asyncio.wait_for(future, timeout=timeout)
         results.append(port)
         w.close()
+        r.close()
     except asyncio.TimeoutError:
         # Port is closed
         pass
