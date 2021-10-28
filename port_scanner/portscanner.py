@@ -1,12 +1,15 @@
 """
 Very helpful
 TODO: https://gist.github.com/tonybaloney/8f36998f1bd552a61643668de47f1ba7
+TODO: https://pythex.org/
 """
 
 import argparse
 import asyncio
+import ipaddress
 import logging
 import multiprocessing as mp
+import re
 import socket
 import sys
 import time
@@ -20,17 +23,6 @@ console = Console()
 
 # Set default socket timeout
 timeout = 1
-
-
-def toggle_verbose(flag):
-    """Toggle verbose logging on/off
-
-    :param flag: enable or disable logging in verbose(read DEBUG) mode
-    """
-
-    if flag:
-        logging.basicConfig(level="DEBUG")
-        logging.debug("Logging in debug mode")
 
 
 def tcp_connect_mp(host: str, port: int, results: mp.Queue):
@@ -125,6 +117,29 @@ def convert_hostname(host):
 
     except Exception as generic_err:
         logging.error(f"[!] Cannot resolve host {host}: {generic_err}")
+        return None
+
+
+def generate_hosts(host: str) -> list:
+    """Return list of hosts from CIDR
+
+    :param host: Hosts in CIDR format
+    """
+    try:
+        network = ipaddress.ip_network(host)
+        logging.debug(f"[+] CIDR is valid for provided target host: {host}")
+        return list(network.hosts())
+
+    except AddressValueError as val_error:
+        logging.error(f"[!] Invalid address provided: {host}")
+        return None
+
+    except NetmaskValueError as mask_error:
+        logging.error(f"[!] Invalid netmask provided: {host}")
+        return None
+
+    except Exception as generic_err:
+        logging.error(f"[!] Exception occurred: {generic_err}")
         return None
 
 
@@ -258,7 +273,7 @@ def main():
         )
         sys.exit(0)
 
-    # Check user provided us values for host and port(s)
+    # Check user provided values for host and port(s)
     if host is None:
         parser.print_help()
         sys.exit(0)
@@ -269,8 +284,9 @@ def main():
 
     # If user provides verbose, increase logging level, otherwise default to info
     if verbose_mode:
-        toggle_verbose(True)
         console.print(f"[-] Enabled verbose_mode")
+        logging.basicConfig(level="DEBUG")
+        logging.debug("Logging in debug mode")
     else:
         console.print(f"[-] Standard logging mode enabled")
         logging.basicConfig(level="ERROR")
@@ -300,8 +316,17 @@ def main():
     # Convert list of strings to list of integers
     integer_ports = [int(port) for port in stripped]
 
-    # Convert provided host to IPv4
-    targetipv4 = convert_hostname(host)
+    # If CIDR is provided, pass to generate function
+    result = re.search(
+        r"^(\b25[0-5]|\b2[0-4][0-9]|\b[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/(3[0-2]|[1-2][0-9]|[0-9])$",
+        host,
+    )
+    if result:
+        targethosts = generate_hosts(host)
+    else:
+        # Convert provided host to IPv4
+        targetipv4 = convert_hostname(host)
+        logging.debug(f"[-] Single target host provided: {host}")
 
     # If mode is 'processes' use multiprocessing
     if mode == "processes":
