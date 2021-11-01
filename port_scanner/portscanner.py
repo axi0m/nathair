@@ -6,7 +6,6 @@ TODO: https://pythex.org/
 
 import argparse
 import asyncio
-import ipaddress
 import logging
 import multiprocessing as mp
 import re
@@ -16,6 +15,9 @@ import time
 from queue import Queue
 from rich.console import Console
 from threading import Thread
+from ipaddress import AddressValueError
+from ipaddress import NetmaskValueError
+from ipaddress import ip_network
 
 
 # Initialize rich Console
@@ -23,6 +25,9 @@ console = Console()
 
 # Set default socket timeout
 timeout = 1
+
+FORMAT = "%(filename)s:%(lineno)s - %(funcName)s() %(message)s"
+logging.basicConfig(format=FORMAT)
 
 
 def tcp_connect_mp(host: str, port: int, results: mp.Queue):
@@ -126,7 +131,7 @@ def generate_hosts(host: str) -> list:
     :param host: Hosts in CIDR format
     """
     try:
-        network = ipaddress.ip_network(host)
+        network = ip_network(host)
         logging.debug(f"[+] CIDR is valid for provided target host: {host}")
         return list(network.hosts())
 
@@ -212,7 +217,7 @@ async def host_scan_async(targetipv4, ports):
     """Perform scan given hostname and TCP port number(s) using async coroutines
 
     :param targetipv4: IPv4 of host to target
-    "param ports: List of TCP ports to connect to
+    :param ports: List of TCP ports to connect to
     """
 
     tasks = []
@@ -316,36 +321,60 @@ def main():
     # Convert list of strings to list of integers
     integer_ports = [int(port) for port in stripped]
 
-    # If CIDR is provided, pass to generate function
-    result = re.search(
-        r"^(\b25[0-5]|\b2[0-4][0-9]|\b[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/(3[0-2]|[1-2][0-9]|[0-9])$",
-        host,
-    )
-    if result:
+    # If CIDR format suspected, pass to generate_hosts
+    if "/" in host:
+        console.print(f"[-] Slash detected in user provided host: {host}")
+        logging.debug(f"[-] Possible CIDR range provided as target host: {host}")
         targethosts = generate_hosts(host)
-    else:
-        # Convert provided host to IPv4
+
+    if "/" not in host:
+        console.print(f"[-] No slash detected in user provided host, not CIDR: {host}")
+        logging.debug(f"No slash detected in user provided host, not CIDR: {host}")
         targetipv4 = convert_hostname(host)
-        logging.debug(f"[-] Single target host provided: {host}")
 
     # If mode is 'processes' use multiprocessing
     if mode == "processes":
-        if targetipv4 and integer_ports:
+        logging.debug(f"Begin multiprocessing mode...")
+
+        if targetipv4:
+            logging.debug(f"Individual target host provided")
+
+        if targethosts:
+            logging.debug(f"List of target hosts provided")
+
+        if integer_ports:
             host_scan_mp(targetipv4, integer_ports)
+        else:
+            if targethosts and integer_ports:
+                for host in targethosts:
+                    host_scan_mp(host, integer_ports)
 
     # If mode is 'threading' use threading
     if mode == "threads":
         if targetipv4 and integer_ports:
             host_scan_threading(targetipv4, integer_ports)
+        else:
+            if targethosts and integer_ports:
+                for host in targethosts:
+                    host_scan_threading(host, integer_ports)
 
-    # if mode is 'async' use async coroutines
-    if mode == "async":
-        if targetipv4 and integer_ports:
-            results = asyncio.run(host_scan_async(targetipv4, integer_ports))
-            for result in results:
-                console.print(
-                    f"[+] Port [blue]{result}[/blue] is open", style="bold green"
-                )
+    # # if mode is 'async' use async coroutines
+    # if mode == "async":
+    #     if targetipv4 and integer_ports:
+    #         results = asyncio.run(host_scan_async(targetipv4, integer_ports))
+    #         for result in results:
+    #             console.print(
+    #                 f"[+] Port [blue]{result}[/blue] is open", style="bold green"
+    #             )
+    #     else:
+    #         if targethosts and integer_ports:
+    #             print(targethosts)
+    #             for host in targethosts:
+    #                 results = asyncio.run(host_scan_async(host, integer_ports))
+    #                 for result in results:
+    #                     console.print(
+    #                         f"[+] Port [blue]{result}[/blue] is open", style="bold green"
+    # )
 
 
 if __name__ == "__main__":
