@@ -8,7 +8,6 @@ import argparse
 import asyncio
 import logging
 import multiprocessing as mp
-import re
 import socket
 import sys
 import time

