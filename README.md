@@ -26,7 +26,8 @@ However, if you decide you want to use the code, you're welcome to do so, and yo
 
 ### Prerequisites
 
-- Python 3.7+
+- Minimum required versions: 3.6
+- Incompatible versions: 2
 - git
 - pipenv
 
