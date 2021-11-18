@@ -10,7 +10,6 @@ pexpect = "*"
 pyzipper = "*"
 numpy = "*"
 rich = "*"
-pre-commit = "*"
 
 [dev-packages]
 flake8 = "*"
@@ -18,3 +17,4 @@ pytest = "*"
 dlint = "*"
 bandit = "*"
 pylint = "*"
+pre-commit = "*"
