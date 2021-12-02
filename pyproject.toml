@@ -16,11 +16,7 @@ numpy = "^1.21.4"
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0.1"
 pytest = "^6.2.5"
-dlint = "^0.12.0"
 pylint = "^2.11.1"
-bandit = "^1.7.1"
-pre-commit = "^2.15.0"
-isort = "^5.10.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
