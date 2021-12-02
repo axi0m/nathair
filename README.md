@@ -8,7 +8,6 @@
 [![Python Build with pipenv](https://github.com/axi0m/violent_python/actions/workflows/build-pipenv.yml/badge.svg)](https://github.com/axi0m/violent_python/actions/workflows/build-pipenv.yml)
 [![Python Build with pip](https://github.com/axi0m/violent_python/actions/workflows/build-pip.yml/badge.svg)](https://github.com/axi0m/violent_python/actions/workflows/build-pip.yml)
 
-
 # Violent Python
 
 Selection of various scripts inspired by TJ O'Connor's Violent Python by Syngress. The scripts tend to be targeted at specific security related needs, including:
