@@ -67,21 +67,16 @@ def tcp_connect_threading(host: str, port: int, results: Queue):
             if result == 0:
                 results.put(port)
         except socket.timeout as e:
-            console.print(
-                f"[!] Connection timed out, port [blue]{port}[/blue] is closed or host [green]{host}[/green] is down: [blue]{e}[/blue]",
-                style="bold yellow",
+            logging.debug(
+                f"[!] Connection timed out, port {port} is closed or host {host} is down: {e}"
             )
             return False
         except ConnectionResetError as e:
-            console.print(
-                f"[!] Connection reset by peer [green]{host}[/green] on port [blue]{port}[/blue]",
-                style="bold yellow",
-            )
+            logging.debug(f"[!] Connection reset by peer {host} on port {port}")
             return False
         except BrokenPipeError as e:
-            console.print(
-                f"[!] Broken pipe error, usually this means thread terminated while writes were still pending: [blue]{e}[/blue]",
-                style="bold yellow",
+            logging.debug(
+                f"[!] Broken pipe error, usually this means thread terminated while writes were still pending: {e}"
             )
             return False
 
@@ -158,7 +153,10 @@ def host_scan_mp(targetipv4, ports):
     processes = []
 
     # Tell multiprocessing to use spawn method
-    mp.set_start_method("spawn")
+    try:
+        mp.set_start_method("spawn")
+    except RuntimeError as e:
+        pass
 
     # Init our process pool manager
     pool_manager = mp.Manager()
@@ -178,7 +176,8 @@ def host_scan_mp(targetipv4, ports):
             process.get()
         while not outputs.empty():
             console.print(
-                f"[+] Port [blue]{outputs.get()}[/blue] is open", style="bold green"
+                f"[+] Port [blue]{outputs.get()}[/blue] is open for host [blue]{targetipv4}[/blue]",
+                style="bold green",
             )
 
 
@@ -208,7 +207,8 @@ def host_scan_threading(targetipv4, ports):
     # As the threads finish, the results queue object will grow in size, print the values of the queue
     while not results.empty():
         console.print(
-            f"[+] Port [blue]{results.get()}[/blue] is open", style="bold green"
+            f"[+] Port [blue]{results.get()}[/blue] is open for host [blue]{targetipv4}[/blue]",
+            style="bold green",
         )
 
 
@@ -326,58 +326,66 @@ def main():
         logging.debug(f"[-] Possible CIDR range provided as target host: {host}")
         targethosts = generate_hosts(host)
 
-    if "/" not in host:
+        # If mode is 'processes' use multiprocessing
+        if mode == "processes":
+            logging.debug(f"Begin multiprocessing mode...")
+            logging.debug(f"List of target hosts provided")
+            if integer_ports:
+                for singlehost in targethosts:
+                    host_scan_mp(str(singlehost), integer_ports)
+
+        # If mode is 'threading' use threading
+        if mode == "threads":
+            logging.debug(f"Begin multithreading mode...")
+            logging.debug(f"List of target hosts provided")
+            if integer_ports:
+                for singlehost in targethosts:
+                    host_scan_threading(str(singlehost), integer_ports)
+
+        # if mode is 'async' use async coroutines
+        if mode == "async":
+            logging.debug(f"Begin async mode...")
+            logging.debug(f"List of target hosts provided")
+            if integer_ports:
+                for singlehost in targethosts:
+                    results = asyncio.run(
+                        host_scan_async(str(singlehost), integer_ports)
+                    )
+                    for result in results:
+                        console.print(
+                            f"[+] Port [blue]{result}[/blue] is open for host [blue]{singlehost}[/blue]",
+                            style="bold green",
+                        )
+
+    # If the host is not a CIDR format, assume it is a single host and convert to IPv4 address
+    else:
         console.print(f"[-] No slash detected in user provided host, not CIDR: {host}")
         logging.debug(f"No slash detected in user provided host, not CIDR: {host}")
         targetipv4 = convert_hostname(host)
 
-    # If mode is 'processes' use multiprocessing
-    if mode == "processes":
-        logging.debug(f"Begin multiprocessing mode...")
-
-        if targetipv4:
+        # If mode is 'processes' use multiprocessing
+        if mode == "processes":
+            logging.debug(f"Begin multiprocessing mode...")
             logging.debug(f"Individual target host provided")
+            if integer_ports:
+                host_scan_mp(targetipv4, integer_ports)
 
-        if targethosts:
-            logging.debug(f"List of target hosts provided")
+        # If mode is 'threading' use threading
+        if mode == "threads":
+            logging.debug(f"Begin multithreading mode...")
+            logging.debug(f"Individual target host provided")
+            if integer_ports:
+                host_scan_threading(targetipv4, integer_ports)
 
-        if integer_ports:
-            host_scan_mp(targetipv4, integer_ports)
-        else:
-            if targethosts and integer_ports:
-                for host in targethosts:
-                    host_scan_mp(host, integer_ports)
-
-    # If mode is 'threading' use threading
-    if mode == "threads":
-        if targetipv4 and integer_ports:
-            host_scan_threading(targetipv4, integer_ports)
-        else:
-            if targethosts and integer_ports:
-                for host in targethosts:
-                    host_scan_threading(host, integer_ports)
-
-    # # if mode is 'async' use async coroutines
-    # if mode == "async":
-    #     if targetipv4 and integer_ports:
-    #         results = asyncio.run(host_scan_async(targetipv4, integer_ports))
-    #         for result in results:
-    #             console.print(
-    #                 f"[+] Port [blue]{result}[/blue] is open", style="bold green"
-    #             )
-    #     else:
-    #         if targethosts and integer_ports:
-    #             print(targethosts)
-    #             for host in targethosts:
-    #                 results = asyncio.run(host_scan_async(host, integer_ports))
-    #                 for result in results:
-    #                     console.print(
-    #                         f"[+] Port [blue]{result}[/blue] is open", style="bold green"
-    # )
+        # if mode is 'async' use async coroutines
+        if mode == "async":
+            results = asyncio.run(host_scan_async(targetipv4, integer_ports))
+            for result in results:
+                console.print(
+                    f"[+] Port [blue]{result}[/blue] is open for host [blue]{targetipv4}[/blue]",
+                    style="bold green",
+                )
 
 
 if __name__ == "__main__":
-    start = time.perf_counter()
     main()
-    stop = time.perf_counter()
-    console.print(f"[*] Execution time was: {stop-start:0.4f} seconds")
