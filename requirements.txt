@@ -19,7 +19,7 @@ filelock==3.4.0; python_version >= '3.6'
 identify==2.4.0; python_full_version >= '3.6.1'
 idna==3.3; python_version >= '3'
 nodeenv==1.6.0
-numpy==1.21.3
+numpy==1.21.4
 pexpect==4.8.0
 platformdirs==2.4.0; python_version >= '3.6'
 pre-commit==2.15.0
