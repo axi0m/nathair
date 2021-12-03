@@ -3,10 +3,11 @@
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/axi0m/violent_python.svg?logo=lgtm&logoWidth=18&style=flat-square)](https://lgtm.com/projects/g/axi0m/violent_python/alerts/)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/axi0m/violent_python.svg?logo=lgtm&logoWidth=18&style=flat-square)](https://lgtm.com/projects/g/axi0m/violent_python/context:python)
 [![Code Style Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
-[![Updates](https://pyup.io/repos/github/axi0m/violent_python/shield.svg)](https://pyup.io/repos/github/axi0m/violent_python/)
-[![Python Build with poetry](https://github.com/axi0m/violent_python/actions/workflows/build-poetry.yml/badge.svg)](https://github.com/axi0m/violent_python/actions/workflows/build-poetry.yml)
-[![Python Build with pipenv](https://github.com/axi0m/violent_python/actions/workflows/build-pipenv.yml/badge.svg)](https://github.com/axi0m/violent_python/actions/workflows/build-pipenv.yml)
-[![Python Build with pip](https://github.com/axi0m/violent_python/actions/workflows/build-pip.yml/badge.svg)](https://github.com/axi0m/violent_python/actions/workflows/build-pip.yml)
+[![Updates](https://pyup.io/repos/github/axi0m/violent_python/shield.svg?style=flat-square)](https://pyup.io/repos/github/axi0m/violent_python/)
+[![Python Build with poetry](https://github.com/axi0m/violent_python/actions/workflows/build-poetry.yml/badge.svg?style=flat-square)](https://github.com/axi0m/violent_python/actions/workflows/build-poetry.yml)
+[![Python Build with pipenv](https://github.com/axi0m/violent_python/actions/workflows/build-pipenv.yml/badge.svg?style=flat-square)](https://github.com/axi0m/violent_python/actions/workflows/build-pipenv.yml)
+[![Python Build with pip](https://github.com/axi0m/violent_python/actions/workflows/build-pip.yml/badge.svg?style=flat-square)](https://github.com/axi0m/violent_python/actions/workflows/build-pip.yml)
+[![flake8 lint](https://github.com/axi0m/violent_python/actions/workflows/flake8-lint.yml/badge.svg?style=flat-square)](https://github.com/axi0m/violent_python/actions/workflows/flake8-lint.yml)
 
 # Violent Python
 
