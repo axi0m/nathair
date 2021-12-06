@@ -25,8 +25,8 @@ violent_python
 
 ## Install
 
-Pull the repository down.
-`git pull https://github.com/axi0m/violent_python`
+Clone the repository.
+`git clone https://github.com/axi0m/violent_python`
 
 Use `pipenv` to create a new virtualenv to work in and install all dependencies.
 `pipenv install`
