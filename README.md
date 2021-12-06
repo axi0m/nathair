@@ -13,16 +13,16 @@
 
 Selection of various scripts inspired by TJ O'Connor's Violent Python by Syngress. The scripts tend to be targeted at specific security related needs, including:
 
-1. Encrypted zip file dictionary cracker
-2. Rudimentary port scanner
-3. Offline Linux password cracker (dictionary based, only supports MD5 currently)
-4. SSH client/server botnet (Partially implemented)
-5. Whois DB client (Requires whoisxml API key)
-6. MD5 hash generator for VirusShare.com malware corpus (Scrapes public hash URLs)
+1. Encrypted zip file dictionary cracker.
+2. Rudimentary port scanner.
+3. Offline Linux password cracker (dictionary based, only supports MD5 currently).
+4. SSH client/server botnet (Partially implemented).
+5. Whois DB client (Requires whoisxml API key).
+6. MD5 hash generator for VirusShare.com malware corpus (Scrapes public hash URLs).
 
 ## Getting Started
 
-Please don't use this repo for anything legitimate. You're free to copy the code, clone it, and modify it (see license)
+Please don't use this repo for anything legitimate. You're free to copy the code, clone it, and modify it (see license).
 but I'd rather you buy TJ O'Connor's book and do the exercises/projects yourself.
 
 However, if you decide you want to use the code, you're welcome to do so, and you're even welcome to submit PR's and issues, just do not expect a ton of support as this is just side project work I use to learn and improve my security and Python skills.
@@ -32,22 +32,36 @@ However, if you decide you want to use the code, you're welcome to do so, and yo
 - Minimum required versions: 3.6
 - Incompatible versions: 2
 - git
-- pipenv
 
 ## Using/Installing
 
 ⚠ I expect much of this not to work. Use at your own peril.
 
 Ensure you have the required components.
-Navigate to your preferred clone directory (/usr/local/src/ or /opt/ in Linux or wherever you want in Windows)
+Navigate to your preferred clone directory (/usr/local/src/ or /opt/ in Linux or wherever you want in Windows).
 
 ```bash
 git clone https://github.com/axi0m/violent_python.git
 ```
 
+### Install via pipenv
+
 ```bash
 pipenv install
-python <filename>.py
+pipenv run python <filename>.py
+```
+
+### Install via poetry
+
+```bash
+poetry install
+poetry run python <filename>.py
+```
+
+### Install via pip
+
+```bash
+pip install -r requirements.txt
 ```
 
 ## Help with tools
@@ -63,11 +77,12 @@ python <filename>.py --examples
 
 ## Deployment
 
-I do not recommend you use this code on a live system, this was created purely to host my code as I learned more about Python
+I do not recommend you use this code on a live system, this was created purely to host my code as I learned more about Python.
 
 ## Built With
 
-- [Pipenv](https://pipenv.readthedocs.io/en/latest/) - 📦 Package management and virtual environment handling
+- [Poetry](https://python-poetry.org/) - 📦 Package management and virtual environment handling
+- [Pipenv](https://pipenv.readthedocs.io/en/latest/) - 📦 Package management and virtual environment handling (Legacy)
 - [VSCode](https://code.visualstudio.com/) - 🔥 IDE from Microsoft
 - [PyUp.io](https://pyup.io) - [ ~ Dependencies scanned by PyUp.io ~ ]
 - [LGTM](https://lgtm.com) - 🔐 Code quality and security scanning by LGTM/Semmle
@@ -75,6 +90,51 @@ I do not recommend you use this code on a live system, this was created purely t
 ## Contributing
 
 If you want to contribute, I recommend you fork it and do with it what you will. I'm not looking at this time to accept contributions, I'm just expanding the code as I learn Python and add new security tooling I find useful.
+
+### Contributor Agreement
+
+[DCO](https://developercertificate.org/)
+
+```text
+
+
+Developer Certificate of Origin
+Version 1.1
+
+Copyright (C) 2004, 2006 The Linux Foundation and its contributors.
+
+Everyone is permitted to copy and distribute verbatim copies of this
+license document, but changing it is not allowed.
+
+
+Developer's Certificate of Origin 1.1
+
+By making a contribution to this project, I certify that:
+
+(a) The contribution was created in whole or in part by me and I
+    have the right to submit it under the open source license
+    indicated in the file; or
+
+(b) The contribution is based upon previous work that, to the best
+    of my knowledge, is covered under an appropriate open source
+    license and I have the right under that license to submit that
+    work with modifications, whether created in whole or in part
+    by me, under the same open source license (unless I am
+    permitted to submit under a different license), as indicated
+    in the file; or
+
+(c) The contribution was provided directly to me by some other
+    person who certified (a), (b) or (c) and I have not modified
+    it.
+
+(d) I understand and agree that this project and the contribution
+    are public and that a record of the contribution (including all
+    personal information I submit with it, including my sign-off) is
+    maintained indefinitely and may be redistributed consistent with
+    this project or the open source license(s) involved.
+
+
+```
 
 ## Versioning
 
