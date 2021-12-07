@@ -1,7 +1,7 @@
 """
 Very helpful
-TODO: https://gist.github.com/tonybaloney/8f36998f1bd552a61643668de47f1ba7
-TODO: https://pythex.org/
+https://gist.github.com/tonybaloney/8f36998f1bd552a61643668de47f1ba7
+https://pythex.org/
 """
 
 import argparse
@@ -10,7 +10,6 @@ import logging
 import multiprocessing as mp
 import socket
 import sys
-import time
 from queue import Queue
 from rich.console import Console
 from threading import Thread
