@@ -13,32 +13,30 @@
 
 Selection of various scripts inspired by TJ O'Connor's Violent Python by Syngress. The scripts tend to be targeted at specific security related needs, including:
 
-1. Encrypted zip file dictionary cracker.
-2. Rudimentary port scanner.
-3. Offline Linux password cracker (dictionary based, only supports MD5 currently).
-4. SSH client/server botnet (Partially implemented).
-5. Whois DB client (Requires whoisxml API key).
-6. MD5 hash generator for VirusShare.com malware corpus (Scrapes public hash URLs).
+1. Encrypted zip file dictionary cracker. **Do not use this, go over to [Hashcat](https://hashcat.net/hashcat/).**
+2. Rudimentary port scanner. **Do not use this, go over to [Nmap](https://nmap.org/).**
+3. Offline Linux password cracker (dictionary based, only supports MD5 currently). **Do not use this, go over to [Hashcat](https://hashcat.net/hashcat/).**
+4. SSH client/server botnet (Partially implemented). Requires major upgrade to leverage paramiko.
+5. Whois DB client (Requires whoisxml API key). **Use the `whois` command baked into Linux or Mac OS.**
+6. MD5 hash generator for VirusShare.com malware corpus (Scrapes public hash URLs). **Use [VirusTotal](https://www.virustotal.com/gui/home/search).**
 
 ## Getting Started
 
 Please don't use this repo for anything legitimate. You're free to copy the code, clone it, and modify it (see license).
-but I'd rather you buy TJ O'Connor's book and do the exercises/projects yourself.
-
-However, if you decide you want to use the code, you're welcome to do so, and you're even welcome to submit PR's and issues, just do not expect a ton of support as this is just side project work I use to learn and improve my security and Python skills.
 
 ### Prerequisites
 
 - Minimum required versions: 3.6
 - Incompatible versions: 2
 - git
+- pip or pipenv or poetry
 
 ## Using/Installing
 
 ⚠ I expect much of this not to work. Use at your own peril.
 
-Ensure you have the required components.
-Navigate to your preferred clone directory (/usr/local/src/ or /opt/ in Linux or wherever you want in Windows).
+Ensure you have the prerequisites.
+Navigate to your preferred directory.
 
 ```bash
 git clone https://github.com/axi0m/violent_python.git
@@ -89,7 +87,7 @@ I do not recommend you use this code on a live system, this was created purely t
 
 ## Contributing
 
-If you want to contribute, I recommend you fork it and do with it what you will. I'm not looking at this time to accept contributions, I'm just expanding the code as I learn Python and add new security tooling I find useful.
+If you want to contribute, I recommend you fork it and do with it what you will.
 
 ### Contributor Agreement
 
@@ -150,7 +148,7 @@ This project is licensed under MIT license - see the [LICENSE.md](https://github
 
 ## Acknowledgements
 
-1. Syngress for publishing the book Violent Python
+1. Syngress for publishing the book Violent Python.
 2. TJ O'Connor for writing the book and doing the hard work of coming up with all the examples and sharing his years of
 knowledge with his readers.
 3. All the projects mentioned in the Built With section. Almost all the code is other people's hardwork, I just cobbled it together.
