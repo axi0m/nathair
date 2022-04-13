@@ -227,7 +227,7 @@ async def host_scan_async(targetipv4, ports):
 
 
 def main():
-    """ Main function to parse arguments and run port scan"""
+    """Main function to parse arguments and run port scan"""
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--host", nargs="?", action="store", dest="host", help="Host to scan."

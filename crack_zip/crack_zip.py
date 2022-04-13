@@ -46,7 +46,7 @@ pfile = args.pwdfile
 
 
 def test_pyzipper():
-    """ Test if pyzipper is installed """
+    """Test if pyzipper is installed"""
 
     if "pyzipper" not in sys.modules:
         logging.info(f"Module pyzipper is not installed")
@@ -57,27 +57,27 @@ def test_pyzipper():
 
 
 def test_zipfile(zfile):
-    """ Test if file is legit Zip file or not """
+    """Test if file is legit Zip file or not"""
 
     result = zipfile.is_zipfile(zfile)
     return result
 
 
 def test_read(file):
-    """ Test that file path provided exists and we have read permissions """
+    """Test that file path provided exists and we have read permissions"""
 
     if os.access(file, os.R_OK):
         return True
 
 
 def test_exists(file):
-    """ Test that file exists """
+    """Test that file exists"""
     if os.path.exists(file):
         return True
 
 
 def extract_file(zfile, password):
-    """ Extract Zip archive given particular password """
+    """Extract Zip archive given particular password"""
 
     try:
         zfile.extractall(pwd=password.encode("utf-8"))
@@ -96,7 +96,7 @@ def extract_file(zfile, password):
 
 
 def main():
-    """ Main function """
+    """Main function"""
 
     # Check if pyzipper support is present
     result_pyzipper = test_pyzipper()

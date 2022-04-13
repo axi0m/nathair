@@ -42,7 +42,7 @@ domainName = args.domain
 
 
 def perform_request(domainName, apiKey, url):
-    """ HTTP Request to domain with specific headers and payload parameters """
+    """HTTP Request to domain with specific headers and payload parameters"""
 
     # We set UA to MacOS Firefox browser traffic
     headers = {
@@ -59,7 +59,7 @@ def perform_request(domainName, apiKey, url):
 
 
 def parse_whois(whoisRecord: dict, domainName: str):
-    """ Input whois record dict and return select fields to console """
+    """Input whois record dict and return select fields to console"""
 
     # Custom dictionary
     limited_info = {}
@@ -95,7 +95,7 @@ def parse_whois(whoisRecord: dict, domainName: str):
 
 
 def main():
-    """ Main function """
+    """Main function"""
     result = perform_request(
         domainName, apiKey, "https://www.whoisxmlapi.com/whoisserver/WhoisService"
     )

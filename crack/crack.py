@@ -61,7 +61,7 @@ debug_mode = args.debug
 
 
 def test_pass(hashtype, hashPass):
-    """ Test if we hash of the password matches our password hash file """
+    """Test if we hash of the password matches our password hash file"""
     with open(passfile, "r") as dictFile:
         for word in dictFile:
             word = word.strip("\n")
@@ -87,7 +87,7 @@ def test_pass(hashtype, hashPass):
 
 
 def main(hashfile, hashtype):
-    """ Accept file of hashes and given hash type """
+    """Accept file of hashes and given hash type"""
 
     if examples:
         print(f"Run crack.py against md5 Linux /etc/passwd file format\n")

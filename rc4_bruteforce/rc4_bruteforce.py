@@ -72,7 +72,7 @@ def check(key, data):
 
 def worker(base):
     # read 64KB from file
-    data = open(FILE_NAME, "rb").read(2 ** 16)
+    data = open(FILE_NAME, "rb").read(2**16)
 
     # Generate all strings of KEY_LENGTH length and check them
     # We know prior that the key starts with a. Remove the next two lines for generic behavior
