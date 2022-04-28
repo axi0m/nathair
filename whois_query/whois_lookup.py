@@ -12,34 +12,6 @@ console = Console()
 # TODO: Add a way to check usage limits before making requests, if we hit a soft limit (say 100 left) warn the user
 # TODO: Use a local cache to reduce the number of API requests we submit
 
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    "--domain",
-    nargs="?",
-    action="store",
-    dest="domain",
-    help="The domain to lookup in Whois database.",
-)
-parser.add_argument(
-    "--apikey", nargs="?", action="store", dest="apikey", help="The secret API key"
-)
-
-# Parse our arguments provided at CLI
-args = parser.parse_args()
-
-# Verify the variables were provided or print help
-if not args.domain:
-    parser.print_help()
-    sys.exit(1)
-
-if not args.apikey:
-    parser.print_help()
-    sys.exit(1)
-
-# Set to cleaner variable names for ease later on
-apiKey = args.apikey
-domainName = args.domain
-
 
 def perform_request(domainName, apiKey, url):
     """HTTP Request to domain with specific headers and payload parameters"""
@@ -96,15 +68,43 @@ def parse_whois(whoisRecord: dict, domainName: str):
 
 def main():
     """Main function"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--domain",
+        nargs="?",
+        action="store",
+        dest="domain",
+        help="The domain to lookup in Whois database.",
+    )
+    parser.add_argument(
+        "--apikey", nargs="?", action="store", dest="apikey", help="The secret API key"
+    )
+
+    # Parse our arguments provided at CLI
+    args = parser.parse_args()
+
+    # Verify the variables were provided or print help
+    if not args.domain:
+        parser.print_help()
+        sys.exit(1)
+
+    if not args.apikey:
+        parser.print_help()
+        sys.exit(1)
+
+    # Set to cleaner variable names for ease later on
+    apiKey = args.apikey
+    domainName = args.domain
+
     result = perform_request(
         domainName, apiKey, "https://www.whoisxmlapi.com/whoisserver/WhoisService"
     )
 
+    print(result.content)
+
     # Get JSON
     json_response = result.json()
-
-    # for k,v in json_response.items():
-    #     console.print(k,v)
 
     # If 401 remind user API key may be wrong
     if result.status_code == 401:
@@ -114,29 +114,49 @@ def main():
         sys.exit(1)
 
     # Parse the whois record
-    whois_record = json_response.get("WhoisRecord")
-    limited_info = parse_whois(whois_record, domainName)
+    try:
+        whois_record = json_response.get("WhoisRecord")
+    except TypeError as typeerror:
+        console.print(
+            f"[!] Unable to parse WhoisRecord from JSON: {whois_record}",
+            style="bold red",
+        )
+        sys.exit(1)
+    except Exception as generror:
+        console.print(
+            f"[!] Encountered unhandled exception: {generror}", style="bold red"
+        )
+        sys.exit(1)
 
-    console.print(
-        f"[+] Registrar for domain {domainName} is: [blue]{limited_info['Registrar Name']}[/blue]",
-        style="bold green",
-    )
-    console.print(
-        f"[+] Registrant organization for domain {domainName} is: [blue]{limited_info['Organization']}[/blue]",
-        style="bold green",
-    )
-    console.print(
-        f"[+] Registrant state for domain {domainName} is: [blue]{limited_info['State']}[/blue]",
-        style="bold green",
-    )
-    console.print(
-        f"[+] Registrant country for domain {domainName} is: [blue]{limited_info['Country']}[/blue]",
-        style="bold green",
-    )
-    console.print(
-        f"[+] Registrant country code for domain {domainName} is: [blue]{limited_info['Country Code']}[/blue]",
-        style="bold green",
-    )
+    # try:
+    #     limited_info = parse_whois(whois_record, domainName)
+    # except TypeError as typeerror:
+    #     console.print(f'[!] Unable to parse limited whois record info: {limited_info}', style="bold red")
+    #     sys.exit(1)
+    # except Exception as generror:
+    #     console.print(f'[!] Encountered unhandled exception: {generror}', style="bold red")
+    #     sys.exit(1)
+
+    # console.print(
+    #     f"[+] Registrar for domain {domainName} is: [blue]{limited_info['Registrar Name']}[/blue]",
+    #     style="bold green",
+    # )
+    # console.print(
+    #     f"[+] Registrant organization for domain {domainName} is: [blue]{limited_info['Organization']}[/blue]",
+    #     style="bold green",
+    # )
+    # console.print(
+    #     f"[+] Registrant state for domain {domainName} is: [blue]{limited_info['State']}[/blue]",
+    #     style="bold green",
+    # )
+    # console.print(
+    #     f"[+] Registrant country for domain {domainName} is: [blue]{limited_info['Country']}[/blue]",
+    #     style="bold green",
+    # )
+    # console.print(
+    #     f"[+] Registrant country code for domain {domainName} is: [blue]{limited_info['Country Code']}[/blue]",
+    #     style="bold green",
+    # )
 
 
 if __name__ == "__main__":
