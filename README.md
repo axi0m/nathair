@@ -9,14 +9,14 @@
 [![Python Build with pip](https://github.com/axi0m/violent_python/actions/workflows/build-pip.yml/badge.svg?style=flat-square)](https://github.com/axi0m/violent_python/actions/workflows/build-pip.yml)
 [![flake8 lint](https://github.com/axi0m/violent_python/actions/workflows/flake8-lint.yml/badge.svg?style=flat-square)](https://github.com/axi0m/violent_python/actions/workflows/flake8-lint.yml)
 
-# Violent Python
+# Nathair
 
 Selection of various scripts inspired by TJ O'Connor's Violent Python by Syngress. The scripts tend to be targeted at specific security related needs, including:
 
-1. Encrypted zip file dictionary cracker. **Do not use this, go over to [Hashcat](https://hashcat.net/hashcat/).**
-2. Rudimentary port scanner. **Do not use this, go over to [Nmap](https://nmap.org/).**
-3. Offline Linux password cracker (dictionary based, only supports MD5 currently). **Do not use this, go over to [Hashcat](https://hashcat.net/hashcat/).**
-4. SSH client/server botnet (Partially implemented). Requires major upgrade to leverage paramiko.
+1. Encrypted zip file dictionary cracker. **Do not use this IRL, use [Hashcat](https://hashcat.net/hashcat/).**
+2. Rudimentary port scanner. **Do not use this IRL, use [Nmap](https://nmap.org/).**
+3. Offline Linux password cracker (dictionary based, only supports MD5 currently). **Do not use this IRL, go over to [Hashcat](https://hashcat.net/hashcat/).**
+4. SSH client/server botnet (WIP - requires rewrite to leverage paramiko)
 5. Whois DB client (Requires whoisxml API key). **Use the `whois` command baked into Linux or Mac OS.**
 6. MD5 hash generator for VirusShare.com malware corpus (Scrapes public hash URLs). **Use [VirusTotal](https://www.virustotal.com/gui/home/search).**
 
