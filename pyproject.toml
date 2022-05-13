@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "violent_python"
+name = "nathair"
 version = "0.1.0"
-description = ""
+description = "Assortment of Python information security CLI utilities"
 authors = ["axi0m <axi0m@users.noreply.github.com>"]
 license = "MIT"
 
