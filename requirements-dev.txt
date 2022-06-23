@@ -23,7 +23,7 @@ iniconfig==1.1.1
 isort==5.10.1; python_version < '4.0' and python_full_version >= '3.6.1'
 lazy-object-proxy==1.7.1; python_version >= '3.6'
 mccabe==0.7.0
-numpy==1.22.4
+numpy==1.23.0
 packaging==21.3; python_version >= '3.6'
 pexpect==4.8.0
 platformdirs==2.5.2; python_version >= '3.7'
@@ -71,7 +71,7 @@ iniconfig==1.1.1
 isort==5.10.1; python_version < '4.0' and python_full_version >= '3.6.1'
 lazy-object-proxy==1.7.1; python_version >= '3.6'
 mccabe==0.7.0
-numpy==1.22.4
+numpy==1.23.0
 packaging==21.3; python_version >= '3.6'
 pexpect==4.8.0
 platformdirs==2.5.2; python_version >= '3.7'
