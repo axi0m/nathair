@@ -3,7 +3,6 @@
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/axi0m/nathair.svg?logo=lgtm&logoWidth=18&style=flat-square)](https://lgtm.com/projects/g/axi0m/nathair/alerts/)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/axi0m/nathair.svg?logo=lgtm&logoWidth=18&style=flat-square)](https://lgtm.com/projects/g/axi0m/nathair/context:python)
 [![Code Style Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
-[![Updates](https://pyup.io/repos/github/axi0m/nathair/shield.svg?style=flat-square)](https://pyup.io/repos/github/axi0m/nathair/)
 ![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/axi0m/nathair?style=flat-square)
 [![Python Build with poetry](https://github.com/axi0m/nathair/actions/workflows/build-poetry.yml/badge.svg?style=flat-square)](https://github.com/axi0m/nathair/actions/workflows/build-poetry.yml)
 [![Python Build with pipenv](https://github.com/axi0m/nathair/actions/workflows/build-pipenv.yml/badge.svg?style=flat-square)](https://github.com/axi0m/nathair/actions/workflows/build-pipenv.yml)
@@ -83,7 +82,6 @@ I do not recommend you use this code on a live system, this was created purely t
 - [Poetry](https://python-poetry.org/) - 📦 Package management and virtual environment handling
 - [Pipenv](https://pipenv.readthedocs.io/en/latest/) - 📦 Package management and virtual environment handling (Legacy)
 - [VSCode](https://code.visualstudio.com/) - 🔥 IDE from Microsoft
-- [PyUp.io](https://pyup.io) - [ ~ Dependencies scanned by PyUp.io ~ ]
 - [LGTM](https://lgtm.com) - 🔐 Code quality and security scanning by LGTM/Semmle
 
 ## Contributing
