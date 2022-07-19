@@ -4,6 +4,7 @@
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/axi0m/nathair.svg?logo=lgtm&logoWidth=18&style=flat-square)](https://lgtm.com/projects/g/axi0m/nathair/context:python)
 [![Code Style Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 [![Updates](https://pyup.io/repos/github/axi0m/nathair/shield.svg?style=flat-square)](https://pyup.io/repos/github/axi0m/nathair/)
+![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/axi0m/nathair?style=flat-square)
 [![Python Build with poetry](https://github.com/axi0m/nathair/actions/workflows/build-poetry.yml/badge.svg?style=flat-square)](https://github.com/axi0m/nathair/actions/workflows/build-poetry.yml)
 [![Python Build with pipenv](https://github.com/axi0m/nathair/actions/workflows/build-pipenv.yml/badge.svg?style=flat-square)](https://github.com/axi0m/nathair/actions/workflows/build-pipenv.yml)
 [![Python Build with pip](https://github.com/axi0m/nathair/actions/workflows/build-pip.yml/badge.svg?style=flat-square)](https://github.com/axi0m/nathair/actions/workflows/build-pip.yml)
@@ -144,7 +145,7 @@ No specific versioning system/format defined/selected.
 
 ## License
 
-This project is licensed under MIT license - see the [LICENSE.md](https://github.com/axi0m/violent_python/blob/master/LICENSE.md) file for details.
+This project is licensed under MIT license - see the [LICENSE.md](https://github.com/axi0m/nathair/blob/master/LICENSE.md) file for details.
 
 ## Acknowledgements
 
