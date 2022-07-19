@@ -1,7 +1,5 @@
 [![GitHub](https://img.shields.io/github/license/axi0m/nathair?color=bright-green&style=flat-square)](https://github.com/axi0m/nathair/blob/master/LICENSE.md)
 ![Maintenance](https://img.shields.io/maintenance/yes/2022?style=flat-square)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/axi0m/nathair.svg?logo=lgtm&logoWidth=18&style=flat-square)](https://lgtm.com/projects/g/axi0m/nathair/alerts/)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/axi0m/nathair.svg?logo=lgtm&logoWidth=18&style=flat-square)](https://lgtm.com/projects/g/axi0m/nathair/context:python)
 [![Code Style Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 ![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/axi0m/nathair?style=flat-square)
 [![Python Build with poetry](https://github.com/axi0m/nathair/actions/workflows/build-poetry.yml/badge.svg?style=flat-square)](https://github.com/axi0m/nathair/actions/workflows/build-poetry.yml)
