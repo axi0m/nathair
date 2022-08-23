@@ -15,3 +15,6 @@ rich = "*"
 flake8 = "*"
 pytest = "*"
 pylint = "*"
+
+[requires]
+python_version = "3.9"

@@ -24,8 +24,9 @@ Please don't use this repo for anything legitimate. You're free to copy the code
 
 ### Prerequisites
 
-- Minimum required versions: 3.6
-- Incompatible versions: 2
+- Minimum required versions: 3.7
+- Pinned Pipenv version: 3.9
+- Incompatible versions: <3.7
 - git
 - pip or pipenv or poetry
 
