@@ -6,7 +6,7 @@
 #
 
 -i https://pypi.python.org/simple
-certifi==2022.6.15; python_version >= '3.6'
+certifi==2022.12.7; python_version >= '3.6'
 cffi==1.15.1
 charset-normalizer==2.1.1; python_version >= '3.6'
 commonmark==0.9.1
